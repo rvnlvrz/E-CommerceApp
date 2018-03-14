@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<categories>
+  <category name="Electronics">
+    <subcategory name="Mobile Phones"/>
+    <subcategory name="Computers"/>
+  </category>
+  <category name="Food"></category>
+  <category name="Clothing">
+    <subcategory name="Adults">
+      <subcategory name="Mens"/>
+      <subcategory name="Womens"/>
+    </subcategory>
+    <subcategory name="Kids">
+      <subcategory name="Mens"/>
+      <subcategory name="Womens"/>
+    </subcategory>
+  </category>
+</categories>
