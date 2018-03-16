@@ -2,9 +2,9 @@
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <div class="container">
-        <asp:ListView ID="ProductList" runat="server" DataSourceID="ProductsDataSource" DataKeyNames="id" GroupItemCount="4">
+        <asp:ListView ID="ProductList" runat="server" DataSourceID="ProductsDataSource" DataKeyNames="id" GroupItemCount="4" OnInit="ProductList_Init" OnItemCommand="ProductList_ItemCommand">
             <EmptyDataTemplate>
-                <table runat="server">
+                <table runat="server" style="">
                     <tr>
                         <td>No data was returned.</td>
                     </tr>
@@ -19,7 +19,7 @@
                 </tr>
             </GroupTemplate>
             <ItemTemplate>
-                <td runat="server">
+                <td runat="server" style="">
                     <div class="card">
                         <a href="#" class="card-link">
                             <img src="Content/Images/download.svg" alt="Alternate Text" class="card-img-top" />
@@ -32,7 +32,8 @@
                         <br />
                         <br />
                         <div class="d-flex flex-row">
-                            <asp:Button ID="Button1" runat="server" Text="Add to Cart" CssClass="btn btn-primary p-2" />
+                            <asp:Button ID="Button1" runat="server" Text="Add to Cart" CssClass="btn btn-primary p-2" CommandArgument='<%#Eval("sku")+","+ Eval("price")%>' />
+                            <asp:Button ID="button" runat="server" Text="to cart" PostBackUrl="~/Cart.aspx" />
                         </div>
                     </div>
                     </div>
@@ -51,7 +52,7 @@
                         </td>
                     </tr>
                     <tr runat="server">
-                        <td runat="server">
+                        <td runat="server" style="">
                             <div class="d-flex flex-row">
                                 <div class="ml-auto p-2">
                                     <asp:DataPager ID="DataPager1" runat="server" PageSize="12">
@@ -66,8 +67,45 @@
                 </table>
             </LayoutTemplate>
         </asp:ListView>
+        <asp:SqlDataSource ID="ProductsDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:ProductsConnectionString %>" SelectCommand="SELECT * FROM [Products]"></asp:SqlDataSource>
+
+        <asp:SqlDataSource ID="CartDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:CartConnectionString %>" DeleteCommand="DELETE FROM [purchases] WHERE [Id] = @original_Id" InsertCommand="INSERT INTO [purchases] ([customer], [items], [prices], [quants], [totalCount], [totalPrice], [reference_key]) VALUES (@customer, @items, @prices, @quants, @totalCount, @totalPrice, @reference_key)" OldValuesParameterFormatString="original_{0}" SelectCommand="SELECT * FROM [purchases]" UpdateCommand="UPDATE [purchases] SET [customer] = @customer, [items] = @items, [prices] = @prices, [quants] = @quants, [totalCount] = @totalCount, [totalPrice] = @totalPrice WHERE [Id] = @original_Id" OnInserting="CartDataSource_Inserting" OnUpdating="CartDataSource_Updating" OnDeleting="CartDataSource_Deleting">
+            <DeleteParameters>
+                <asp:Parameter Name="original_Id" Type="Int32" />
+            </DeleteParameters>
+            <InsertParameters>
+                <asp:Parameter Name="customer" Type="String" />
+                <asp:Parameter Name="items" Type="String" />
+                <asp:Parameter Name="prices" Type="String" />
+                <asp:Parameter Name="quants" Type="String" />
+                <asp:Parameter Name="totalCount" Type="Int32" />
+                <asp:Parameter Name="totalPrice" Type="Decimal" />
+                <asp:Parameter Name="reference_key" Type="String" />
+            </InsertParameters>
+            <UpdateParameters>
+                <asp:Parameter Name="customer" Type="String" />
+                <asp:Parameter Name="items" Type="String" />
+                <asp:Parameter Name="prices" Type="String" />
+                <asp:Parameter Name="quants" Type="String" />
+                <asp:Parameter Name="totalCount" Type="Int32" />
+                <asp:Parameter Name="totalPrice" Type="Decimal" />
+                <asp:Parameter Name="original_Id" Type="Int32" />
+            </UpdateParameters>
+        </asp:SqlDataSource>
+
+        <asp:SqlDataSource ID="userInfoDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:UserConnectionString %>" SelectCommand="SELECT [Id], [latest_cart_id] FROM [userInfo]" DeleteCommand="DELETE FROM [userInfo] WHERE [Id] = @Id" InsertCommand="INSERT INTO [userInfo] ([latest_cart_id]) VALUES (@latest_cart_id)" OnUpdating="userInfoDataSource_Updating" UpdateCommand="UPDATE [userInfo] SET [latest_cart_id] = @latest_cart_id WHERE [Id] = @Id">
+            <DeleteParameters>
+                <asp:Parameter Name="Id" Type="Int32" />
+            </DeleteParameters>
+            <InsertParameters>
+                <asp:Parameter Name="latest_cart_id" Type="Int32" />
+            </InsertParameters>
+            <UpdateParameters>
+                <asp:Parameter Name="latest_cart_id" Type="Int32" />
+                <asp:Parameter Name="Id" Type="Int32" />
+            </UpdateParameters>
+        </asp:SqlDataSource>
     </div>
-    <%-- Data Source --%>
-    <asp:SqlDataSource ID="ProductsDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:ProductsConnectionString %>"
-        SelectCommand="SELECT * FROM [Products]"></asp:SqlDataSource>
+
 </asp:Content>
+
