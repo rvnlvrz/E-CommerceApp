@@ -67,7 +67,7 @@
                 <td runat="server" style="">
                     <div class="card">
                         <a href="#" class="card-link">
-                            <img src="Content/Images/download.svg" alt="Alternate Text" class="card-img-top"/>
+                            <img src='<%# RenderImage(Eval("img_url"))%>' alt="Alternate Text" class="card-img-top"/>
                             <div class="card-body">
                             <h6 class="card-text">
                                 <asp:Label ID="nameLabel" runat="server" Text='<%# Eval("name") %>'/>

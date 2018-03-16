@@ -1,6 +1,8 @@
 ﻿using System;
-using System.Web.UI.WebControls;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Web.UI.WebControls;
 
 namespace E_CommerceApp
 {
@@ -72,6 +74,20 @@ namespace E_CommerceApp
                 _referenceKey = ((string)(Session["refkey"]));
             }
 
+        }
+
+        // Handles image src logic
+        protected string RenderImage(object imgUrl)
+        {
+            string path = imgUrl as string;
+
+            // Get all png and jpg files in current dir only
+            var images = Directory.GetFiles(Server.MapPath(path) ?? throw new InvalidOperationException(), "*", SearchOption.TopDirectoryOnly)
+                .Where(file => file.EndsWith(".png") || file.EndsWith(".jpg") || file.EndsWith(".jpeg"));
+
+            // Resolve physical paths to server-relative paths
+            List<string> files = images.Select(img => path + "/" + Path.GetFileName(img)).ToList();
+            return files[0];
         }
 
         protected void ProductList_ItemCommand(object sender, ListViewCommandEventArgs e)

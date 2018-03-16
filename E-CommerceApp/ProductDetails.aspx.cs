@@ -60,7 +60,7 @@ namespace E_CommerceApp
 
             // Get all png and jpg files in current dir only
             var images = Directory.GetFiles(Server.MapPath(path), "*", SearchOption.TopDirectoryOnly)
-                 .Where(file => file.EndsWith(".png") || file.EndsWith(".jpg"));
+                 .Where(file => file.EndsWith(".png") || file.EndsWith(".jpg") || file.EndsWith(".jpeg"));
 
             // Resolve physical paths to server-relative paths
             List<string> files = images.Select(img => path + "/" + Path.GetFileName(img)).ToList();
