@@ -1,22 +1,4 @@
-﻿
-/* Set some basic padding to keep content from hitting the edges */
-
-.body-content {
-    /*padding-left: 15px;
-    padding-right: 15px;*/
-}
-
-/* Set widths on the form inputs since otherwise they're 100% wide */
-
-/*input,
-select,
-textarea {
-    max-width: 280px;
-}*/
-
-/* Responsive: Portrait tablets and up */
-
-@media screen and (min-width: 768px) {
+﻿@media screen and (min-width: 768px) {
     .jumbotron {
         margin-top: 20px;
     }
@@ -68,5 +50,15 @@ footer {
 
 .product-slider #carousel img {
     width: 100%;
+    -webkit-object-fit: scale-down;
     object-fit: scale-down;
+}
+
+.dark-control-next-icon
+{
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23ff000' viewBox='0 0 8 8'%3E%3Cpath d='M1.5 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E");
+}
+
+.dark-control-prev-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23ff000' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E");
 }

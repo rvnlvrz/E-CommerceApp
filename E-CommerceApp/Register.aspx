@@ -1,8 +1,8 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="frm_register.aspx.cs" Inherits="E_CommerceApp.frm_register" %>
+﻿<%@ Page Title="Register" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Register.aspx.cs" Inherits="E_CommerceApp.frm_register" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
-    <div class="container">
+    <div class="container" style="margin-top: 2rem; margin-bottom: 2rem;">
         <asp:FormView ID="FormView1" runat="server" DataKeyNames="Id" DataSourceID="UserInfoDatabase" DefaultMode="Insert" CssClass="container">
             <InsertItemTemplate>
                 <asp:Label ID="lbl_personalHeader" runat="server" Text="Personal Information" CssClass="h3"></asp:Label>

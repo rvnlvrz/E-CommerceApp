@@ -51,7 +51,7 @@
                                             <div class="card">
                                                 <div class="row align-items-center">
                                                     <div class="col col-md-4">
-                                                        <img src="https://www.tmonews.com/wp-content/uploads/2017/03/rediphone7tmo-1-660x544.jpg" class="img-thumbnail" />
+                                                        <img src='<%# RenderImage(Eval("sku"))%>' class="img-thumbnail" />
                                                     </div>
                                                     <div class="col col-md-4">
                                                         <asp:Label ID="lbl_item" runat="server" Text='<%# Eval("item") %>' CssClass="h5"></asp:Label>
@@ -149,5 +149,10 @@
             <asp:Parameter Name="totalPrice" Type="Decimal" />
             <asp:Parameter Name="Id" Type="Int32" />
         </UpdateParameters>
+    </asp:SqlDataSource>
+    <asp:SqlDataSource ID="ProductsDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:ProductsConnectionString %>" SelectCommand="SELECT [img_url] FROM [Products] WHERE ([sku] = @sku)">
+        <SelectParameters>
+            <asp:Parameter Name="sku" Type="String" />
+        </SelectParameters>
     </asp:SqlDataSource>
 </asp:Content>

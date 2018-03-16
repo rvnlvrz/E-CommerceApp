@@ -11,43 +11,14 @@
                 </div>
                 <div class="clearfix">
                     <div id="thumbcarousel" class="carousel slide" data-interval="false">
-                        <asp:Panel ID="SmallCarousel" runat="server" CssClass="carousel-inner">
-                            <div class="carousel-item active">
-                                <div data-target="#carousel" data-slide-to="0" class="thumb">
-                                    <img src="http://placehold.it/100x80?text=Thumb+01">
-                                </div>
-                                <div data-target="#carousel" data-slide-to="1" class="thumb">
-                                    <img src="http://placehold.it/100x80?text=Thumb+02">
-                                </div>
-                                <div data-target="#carousel" data-slide-to="2" class="thumb">
-                                    <img src="http://placehold.it/100x80?text=Thumb+03">
-                                </div>
-                                <div data-target="#carousel" data-slide-to="3" class="thumb">
-                                    <img src="http://placehold.it/100x80?text=Thumb+04">
-                                </div>
-                            </div>
-                            <div class="carousel-item">
-                                <div data-target="#carousel" data-slide-to="5" class="thumb">
-                                    <img src="http://placehold.it/100x80?text=Thumb+06">
-                                </div>
-                                <div data-target="#carousel" data-slide-to="6" class="thumb">
-                                    <img src="http://placehold.it/100x80?text=Thumb+07">
-                                </div>
-                                <div data-target="#carousel" data-slide-to="7" class="thumb">
-                                    <img src="http://placehold.it/100x80?text=Thumb+08">
-                                </div>
-                                <div data-target="#carousel" data-slide-to="8" class="thumb">
-                                    <img src="http://placehold.it/100x80?text=Thumb+08">
-                                </div>
-                            </div>
-                    </asp:Panel>
+                        <asp:Panel ID="SmallCarousel" runat="server" CssClass="carousel-inner"></asp:Panel>
                     <!-- /carousel-inner -->
                     <a class="carousel-control-prev" href="#thumbcarousel" role="button" data-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="carousel-control-prev-icon  dark-control-prev-icon" aria-hidden="true"></span>
                         <span class="sr-only">Previous</span>
                     </a>
                     <a class="carousel-control-next" href="#thumbcarousel" role="button" data-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="carousel-control-next-icon dark-control-next-icon" aria-hidden="true"></span>
                         <span class="sr-only">Next</span>
                     </a>
                     </div>

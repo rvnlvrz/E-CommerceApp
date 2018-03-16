@@ -76,6 +76,30 @@ namespace E_CommerceApp
             }
 
             // Generate thumbnail elements
+            for (int i = 0; i < files.Count; i++)
+            {
+                var div = new HtmlGenericControl("div");
+                div.Attributes["class"] = (i == 0) ? "carousel-item active" : "carousel-item";
+
+                for (int j = 0; j < 4 && i < files.Count; j++)
+                {
+                    var innerDiv = new HtmlGenericControl("div");
+                    innerDiv.Attributes["data-target"] = "#carousel";
+                    innerDiv.Attributes["data-slide-to"] = i.ToString();
+                    innerDiv.Attributes["class"] = "thumb";
+
+                    var img = new Image
+                    {
+                        ImageUrl = files.ElementAt(i)
+                    };
+
+                    innerDiv.Controls.Add(img);
+                    div.Controls.Add(innerDiv);
+                    i++;
+                }
+
+                SmallCarousel.Controls.Add(div);
+            }
         }
     }
 }
