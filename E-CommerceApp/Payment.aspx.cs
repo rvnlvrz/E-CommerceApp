@@ -131,7 +131,7 @@ namespace E_CommerceApp
             cart.Reset();
 
 
-            Response.Redirect("~/Frm_Confirm.aspx");
+            Response.Redirect("~/Confirm.aspx");
         }
     }
 }

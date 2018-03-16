@@ -171,7 +171,7 @@ namespace E_CommerceApp
                 //Response.Redirect(@"~/frm_payment.aspx?mode=logged");
             }
 
-            Response.Redirect(@"~/frm_payment.aspx");
+            Response.Redirect(@"~/Payment.aspx");
 
         }
 
