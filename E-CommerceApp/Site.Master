@@ -74,7 +74,7 @@
                     <td class="align-middle">
                         &copy;<%: DateTime.Now.Year %> - E-Commerce ASP.NET Application
                         <br/>
-                        Arvin Kenneth C. Alvarez || Carl Ivan P. Rayos del Sol
+                        Arvin Kenneth C. Alvarez || Carl Ivan T. Rayos del Sol
                     </td>
                 </tr>
             </tbody>

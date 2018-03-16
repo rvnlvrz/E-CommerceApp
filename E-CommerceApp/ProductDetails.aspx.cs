@@ -14,6 +14,14 @@ namespace E_CommerceApp
         private DataView _results;
         private DataRow _result;
 
+        #region Global Variables
+        private readonly UserCart _cart = UserCart.Instance;
+        private int _userCartId = -1;
+        private int _tempId = -1;
+        private string _currUser = "-";
+        private string _referenceKey = string.Empty;
+        #endregion
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Request.QueryString.Count == 0)
@@ -24,8 +32,69 @@ namespace E_CommerceApp
 
             CreateDetails();
             CreateCarousel();
+
+            
+
+            #region Cart ID Logic
+            if (Session["currUser"] != null)
+            {
+                _currUser = ((string)(Session["currUser"]));
+                _tempId = DBOps.GetLatestEntry(DBOps.GetUserID(_currUser));
+
+                if (_tempId == 0)
+                {
+                    if (DBOps.GetLatestEntry() < 1)
+                    {
+                        _userCartId = DBOps.GetLatestEntry() + 2;
+                    }
+                    else if (DBOps.GetLatestEntry() > 0)
+                    {
+                        _userCartId = DBOps.GetLatestEntry() + 1;
+                    }
+                }
+                else
+                {
+                    _userCartId = _tempId;
+                }
+            }
+            else
+            {
+                if (DBOps.GetLatestEntry() > 0)
+                {
+                    _userCartId = DBOps.GetLatestEntry() + 1;
+                }
+                else
+                {
+                    _userCartId = DBOps.GetLatestEntry() + 2;
+                }
+            }
+
+
+            if (Session["prevID"] == null)
+            {
+                Session["prevID"] = _userCartId;
+            }
+            else
+            {
+                _userCartId = Convert.ToInt32(Session["prevID"]);
+            }
+
+
+            Random rand = new Random();
+            _referenceKey = rand.Next(99999999).ToString() + _userCartId;
+
+            if (Session["refkey"] == null)
+            {
+                Session["refkey"] = _referenceKey;
+            }
+            else
+            {
+                _referenceKey = ((string)(Session["refkey"]));
+            } 
+            #endregion
         }
 
+        #region Product Details Logic
         private void CreateDetails()
         {
             // Set basic page details
@@ -100,6 +169,75 @@ namespace E_CommerceApp
 
                 SmallCarousel.Controls.Add(div);
             }
+        }
+        #endregion
+
+        protected void btnAddToCart_Click(object sender, EventArgs e)
+        {
+            if (((_currUser != "-") && (_tempId != 0)))
+            {
+                _cart.cartID = _userCartId;
+                _cart.cartOwner = _currUser;
+                string[] items = DBOps.GetCartItems(_userCartId);
+                _cart.lastInsertedItem = items[0];
+                _cart.lastInsertedPrice = items[1];
+                _cart.lastInsertedQuant = items[2];
+                _cart.totalItemQuantity = (Convert.ToInt32(items[3]));
+                _cart.totalCartPrice = (Convert.ToDecimal(items[4]));
+            }
+            else if (((_currUser != "-") && (_tempId == 0)))
+            {
+                _cart.cartID = _userCartId;
+                userInfoDataSource.Update();
+            }
+            else
+            {
+                _cart.cartID = _userCartId;
+            }
+
+            _cart.AddItem(_result?["sku"].ToString(), Convert.ToDecimal($"{_result?["price"]}"), Convert.ToInt32(tbxQty.Text));
+            if (!DBOps.RecordExists(_userCartId))
+            {
+                CartDataSource.Insert();
+            }
+            else
+            {
+                CartDataSource.Update();
+            }
+        }
+
+        protected void CartDataSource_Updating(object sender, SqlDataSourceCommandEventArgs e)
+        {
+            e.Command.Parameters["@Id"].Value = _userCartId;
+            e.Command.Parameters["@customer"].Value = _currUser;
+            e.Command.Parameters["@items"].Value = _cart.lastInsertedItem;
+            e.Command.Parameters["@prices"].Value = _cart.lastInsertedPrice;
+            e.Command.Parameters["@quants"].Value = _cart.lastInsertedQuant;
+            e.Command.Parameters["@totalCount"].Value = _cart.totalItemQuantity;
+            e.Command.Parameters["@totalPrice"].Value = _cart.totalCartPrice;
+            e.Command.Parameters["@reference_key"].Value = _referenceKey;
+        }
+
+        protected void CartDataSource_Inserting(object sender, SqlDataSourceCommandEventArgs e)
+        {
+            e.Command.Parameters["@customer"].Value = _currUser;
+            e.Command.Parameters["@items"].Value = _cart.lastInsertedItem;
+            e.Command.Parameters["@prices"].Value = _cart.lastInsertedPrice;
+            e.Command.Parameters["@quants"].Value = _cart.lastInsertedQuant;
+            e.Command.Parameters["@totalCount"].Value = _cart.totalItemQuantity;
+            e.Command.Parameters["@totalPrice"].Value = _cart.totalCartPrice;
+            e.Command.Parameters["@reference_key"].Value = _referenceKey;
+        }
+
+        protected void CartDataSource_Deleting(object sender, SqlDataSourceCommandEventArgs e)
+        {
+            e.Command.Parameters["@Id"].Value = DBOps.GetLatestEntry();
+        }
+
+        protected void userInfoDataSource_Updating(object sender, SqlDataSourceCommandEventArgs e)
+        {
+            e.Command.Parameters["@Id"].Value = DBOps.GetUserID(_currUser);
+            e.Command.Parameters["@latest_cart_id"].Value = _userCartId;
         }
     }
 }
