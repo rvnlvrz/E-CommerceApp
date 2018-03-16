@@ -74,24 +74,6 @@ namespace E_CommerceApp
 
         }
 
-        public static string GetRandomString()
-        {
-            string path = Path.GetRandomFileName();
-            path = path.Replace(".", ""); // Remove period.
-            return path;
-        }
-
-        protected void ProductList_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        protected void ProductList_Init(object sender, EventArgs e)
-        {
-
-        }
-
-        #region Data Source methods
         protected void ProductList_ItemCommand(object sender, ListViewCommandEventArgs e)
         {
             if (((_currUser != "-") && (_tempId != 0)))
@@ -116,7 +98,7 @@ namespace E_CommerceApp
             }
 
             string[] productDetails = ((String)e.CommandArgument).Split(',');
-            _cart.AddItem(productDetails[0].Trim(), Convert.ToDecimal(productDetails[1].Trim()), 3);
+            _cart.AddItem(productDetails[0].Trim(), Convert.ToDecimal(productDetails[1].Trim()), 1);
             if (!DBOps.RecordExists(_userCartId))
             {
                 CartDataSource.Insert();
@@ -125,11 +107,9 @@ namespace E_CommerceApp
             {
                 CartDataSource.Update();
             }
-
-            Label lbl = (Label)Master.FindControl("MainLabel");
-            lbl.Text = 3.ToString();
         }
 
+        #region Data Source methods
         protected void CartDataSource_Updating(object sender, SqlDataSourceCommandEventArgs e)
         {
             e.Command.Parameters["@original_Id"].Value = _userCartId;

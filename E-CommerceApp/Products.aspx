@@ -2,7 +2,7 @@
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <div class="container">
-        <asp:ListView ID="ProductList" runat="server" DataSourceID="ProductsDataSource" DataKeyNames="id" GroupItemCount="4" OnInit="ProductList_Init" OnItemCommand="ProductList_ItemCommand">
+        <asp:ListView ID="ProductList" runat="server" DataSourceID="ProductsDataSource" DataKeyNames="id" GroupItemCount="4" OnItemCommand="ProductList_ItemCommand">
             <EmptyDataTemplate>
                 <table runat="server" style="">
                     <tr>
@@ -33,7 +33,6 @@
                         <br />
                         <div class="d-flex flex-row">
                             <asp:Button ID="Button1" runat="server" Text="Add to Cart" CssClass="btn btn-primary p-2" CommandArgument='<%#Eval("sku")+","+ Eval("price")%>' />
-                            <asp:Button ID="button" runat="server" Text="to cart" PostBackUrl="~/Cart.aspx" />
                         </div>
                     </div>
                     </div>
