@@ -66,7 +66,7 @@
             <ItemTemplate>
                 <td runat="server" style="">
                     <div class="card">
-                        <a href="#" class="card-link">
+                        <a href='ProductDetails.aspx?sku=<%# Eval("sku") %>' class="card-link">
                             <img src='<%# RenderImage(Eval("img_url"))%>' alt="Alternate Text" class="card-img-top"/>
                             <div class="card-body">
                             <h6 class="card-text">

@@ -20,9 +20,9 @@
             </GroupTemplate>
             <ItemTemplate>
                 <td runat="server" style="">
-                    <div class="card" >
-                        <a href="#" class="card-link">
-                            <img src='<%# RenderImage(Eval("img_url"))%>' alt="Alternate Text" class="card-img-top img-fluid" />
+                    <div class="card">
+                        <a href='ProductDetails.aspx?sku=<%# Eval("sku") %>' class="card-link">
+                            <img src='<%# RenderImage(Eval("img_url")) %>' alt="Alternate Text" class="card-img-top img-fluid" />
                             <div class="card-body">
                                 <h6 class="card-text">
                                     <asp:Label ID="nameLabel" runat="server" Text='<%# Eval("name") %>' />
@@ -32,7 +32,7 @@
                         <br />
                         <br />
                         <div class="d-flex flex-row">
-                            <asp:Button ID="Button1" runat="server" Text="Add to Cart" CssClass="btn btn-primary p-2" CommandArgument='<%#Eval("sku")+","+ Eval("price")%>' />
+                            <asp:Button ID="Button1" runat="server" Text="Add to Cart" CssClass="btn btn-primary p-2" CommandArgument='<%# Eval("sku")+","+ Eval("price") %>' />
                         </div>
                     </div>
                 </td>

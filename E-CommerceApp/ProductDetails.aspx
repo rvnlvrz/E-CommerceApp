@@ -2,8 +2,7 @@
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <%-- Layout --%>
-
-    <div class="container">
+    <div class="container" style="margin-top: 2rem; margin-bottom: 2rem;">
         <div class="row">
             <%-- Carousel --%>
             <div class="product-slider col-5">
@@ -12,7 +11,7 @@
                 </div>
                 <div class="clearfix">
                     <div id="thumbcarousel" class="carousel slide" data-interval="false">
-                        <asp:Panel ID="ThumbCarousel" runat="server" CssClass="carousel-inner">
+                        <asp:Panel ID="SmallCarousel" runat="server" CssClass="carousel-inner">
                             <div class="carousel-item active">
                                 <div data-target="#carousel" data-slide-to="0" class="thumb">
                                     <img src="http://placehold.it/100x80?text=Thumb+01">

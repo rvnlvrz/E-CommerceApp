@@ -60,7 +60,7 @@
                                                         <br />
                                                         <asp:Label ID="lbl_price" runat="server" Text='<%# Eval("price","{0:c}") %>' CssClass="h6 text-muted"></asp:Label>
                                                     </div>
-                                                    <div class="col-sm-2">
+                                                    <div class="col-md">
                                                         <div class="container">
                                                             <div class="form-group">
                                                                 <asp:Label ID="Label5" runat="server" Text="Quantity (Max: 99)" CssClass="h6 text-muted"></asp:Label>
