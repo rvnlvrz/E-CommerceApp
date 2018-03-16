@@ -38,7 +38,7 @@
                                             <img class="card-img-top" src="Content/Images/dino.jpg" alt="Card image cap">
                                             <div class="card-body">
                                                 <p class="card-text">Your cart is empty.</p>
-                                                <asp:Button ID="btn_shpNow" runat="server" CssClass="btn btn-outline-success" PostBackUrl="~/Products.aspx" Text="Shop now" />
+                                                <asp:Button ID="btn_shpNow" runat="server" CssClass="btn btn-outline-success" PostBackUrl="~/Home.aspx" Text="Shop now" />
                                             </div>
                                         </div>
                                     </EmptyDataTemplate>

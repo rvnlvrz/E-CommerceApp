@@ -11,9 +11,9 @@ namespace E_CommerceApp
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if ((Session["refNum"] != null))
+            if (Session["refNum"] != null)
             {
-                _refKey = ((string)(Session["refNum"]));
+                _refKey = (string)Session["refNum"];
             }
             else
             {
