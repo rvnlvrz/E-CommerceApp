@@ -15,7 +15,9 @@ namespace E_CommerceApp
         #region Global Variables
         readonly UserCart _cart = UserCart.Instance;
         string _user = "-";
-        int _userCartId = -1; 
+        int _userCartId = -1;
+        int _itemQuant = 0;
+        string _itemSKU = string.Empty;
         #endregion
 
         protected void Page_Load(object sender, EventArgs e)
@@ -30,12 +32,12 @@ namespace E_CommerceApp
                     (Convert.ToInt32(Session["prevID"]));
                 _cart.cartID = _userCartId;
 
-                if (Session["checkSync"] != null)
+                if (Session["sync"] != null)
                 {
                     _cart.SyncCart((Convert.ToInt32(Session["prevID"])), _user);
                     cartDatasource.Update();
                     Session["prevID"] = _userCartId;
-                    Session.Remove("checkSync");
+                    Session.Remove("sync");
                 }
             }
             else
@@ -72,6 +74,9 @@ namespace E_CommerceApp
             {
                 button.Enabled = true;
             }
+
+            SiteMaster master = Page.Master as SiteMaster;
+            master.SetText(_cart.totalItemQuantity, _cart.totalCartPrice);
         }
 
         protected void lvw_items_ItemCommand(object sender, ListViewCommandEventArgs e)
@@ -80,8 +85,12 @@ namespace E_CommerceApp
 
             try
             {
+
                 _cart.RemoveItem(productDetails[0].Trim(), Convert.ToDecimal(productDetails[1].Trim()), Convert.ToInt32(productDetails[2].Trim()));
                 cartDatasource.Update();
+                _itemSKU = productDetails[0].Trim();
+                _itemQuant = (DBOps.GetProductQuantity(_itemSKU) + Convert.ToInt32(productDetails[2].Trim()));
+                ProductsDataSource.Update();
             }
             catch (Exception)
             {
@@ -142,11 +151,16 @@ namespace E_CommerceApp
             Label lblSku = (Label)item.FindControl("lbl_sku");
             Label lblPrice = (Label)item.FindControl("lbl_price");
 
+            int t_originalQuant = Convert.ToInt32(tb.Text);
 
             try
             {
                 _cart.UpdateItem(lblSku.Text, Decimal.Parse(lblPrice.Text, NumberStyles.Currency), Convert.ToInt32(tb.Text));
                 cartDatasource.Update();
+                _itemSKU = lblSku.Text;
+                _itemQuant = (DBOps.GetProductQuantity(_itemSKU) + (t_originalQuant - Convert.ToInt32(tb.Text)));
+                ProductsDataSource.Update();
+
             }
             catch (Exception)
             {
@@ -157,11 +171,6 @@ namespace E_CommerceApp
             lvw_totals.DataSource = DBOps.BuildUserCartTotals(_userCartId);
             lvw_items.DataBind();
             lvw_totals.DataBind();
-
-            //string cleanMessage = "AAAAAAAAAAAAAAAAAAA " + tb.Text;
-            //string script = string.Format("alert('{0}');", cleanMessage);
-            //ScriptManager.RegisterStartupScript(this, Page.GetType(), "alert", script, true);
-
         }
 
         protected void Button1_Click(object sender, EventArgs e)
@@ -193,16 +202,6 @@ namespace E_CommerceApp
             lvw_items.DataBind();
         }
 
-        protected void lvw_items_SelectedIndexChanging(object sender, ListViewSelectEventArgs e)
-        {
-
-        }
-
-        protected void lvw_items_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
         protected void cartDatasource_Deleting(object sender, SqlDataSourceCommandEventArgs e)
         {
             e.Command.Parameters["@Id"].Value = _userCartId;
@@ -229,6 +228,12 @@ namespace E_CommerceApp
             // Resolve physical paths to server-relative paths
             List<string> files = images.Select(img => path + "/" + Path.GetFileName(img)).ToList();
             return files[0];
+        }
+
+        protected void ProductsDataSource_Updating(object sender, SqlDataSourceCommandEventArgs e)
+        {
+            e.Command.Parameters["@sku"].Value = _itemSKU;
+            e.Command.Parameters["@qty"].Value = _itemQuant;
         }
     }
 }

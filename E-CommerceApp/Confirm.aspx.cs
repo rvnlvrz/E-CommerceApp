@@ -9,6 +9,8 @@ namespace E_CommerceApp
 {
     public partial class Frm_Confirm : System.Web.UI.Page
     {
+        private readonly UserCart _cart = UserCart.Instance;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Session["refkey"] != null)
@@ -19,6 +21,9 @@ namespace E_CommerceApp
             {
                 Response.Redirect("~/Home.aspx");
             }
+
+            SiteMaster master = Page.Master as SiteMaster;
+            master.SetText(_cart.totalItemQuantity, _cart.totalCartPrice);
         }
 
         protected void Btn_finalize_Click(object sender, EventArgs e)

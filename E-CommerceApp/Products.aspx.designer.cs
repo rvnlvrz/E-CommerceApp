@@ -20,5 +20,17 @@ namespace E_CommerceApp {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::E_CommerceApp.ProductListControl ProductListControl;
+        
+        /// <summary>
+        /// Master property.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated property.
+        /// </remarks>
+        public new E_CommerceApp.SiteMaster Master {
+            get {
+                return ((E_CommerceApp.SiteMaster)(base.Master));
+            }
+        }
     }
 }

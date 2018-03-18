@@ -16,31 +16,8 @@
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 </head>
 
-<body>
-    <div class="navbar navbar-expand-md navbar-dark bg-dark">
-        <a class="navbar-brand mb-0 h1" runat="server" href="~/Home.aspx">E-Commerce</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-            aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a runat="server" href="~/Products.aspx" class="nav-link">All Products</a>
-                </li>
-                <li class="nav-item">
-                    <a runat="server" href="~/RefCart.aspx" class="nav-link">Order Tracking</a>
-                </li>
-            </ul>
-            <%-- TODO: Implement dynamic data for Session --%>
-            <div class="form-inline">
-                <a href="Cart.aspx" class="btn btn-sm btn-success mr-sm-2"><span class="fa fa-shopping-cart"></span>&nbsp;My Cart</a>
-                <a href="Login.aspx" class="btn btn-sm btn-outline-primary mr-sm-2">Log In</a>
-                <a href="Register.aspx" class="btn btn-sm btn-outline-secondary">Sign Up</a>
-            </div>
-        </div>
-    </div>
-    <form runat="server">
+<body class="bg-dark">
+    <form runat="server" class="bg-light">
         <asp:ScriptManager ID="ScriptManager" runat="server">
             <Scripts>
                 <%--To learn more about bundling scripts in ScriptManager see https://go.microsoft.com/fwlink/?LinkID=301884 --%>
@@ -61,6 +38,35 @@
                 <%--Site Scripts--%>
             </Scripts>
         </asp:ScriptManager>
+        <asp:UpdatePanel ID="NavBarUpnl" runat="server">
+            <ContentTemplate>
+                <div class="navbar navbar-expand-md navbar-dark bg-dark">
+                    <a class="navbar-brand mb-0 h1" runat="server" href="~/Home.aspx">E-Commerce</a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav mr-auto">
+                            <li class="nav-item">
+                                <a runat="server" href="~/Products.aspx" class="nav-link">All Products</a>
+                            </li>
+                            <li class="nav-item">
+                                <a runat="server" href="~/RefCart.aspx" class="nav-link">Order Tracking</a>
+                            </li>
+                        </ul>
+                        <%-- TODO: Implement dynamic data for Session --%>
+                        <div class="form-inline">
+                            <a href="Cart.aspx" class="btn btn-sm btn-success mr-sm-2"><span class="fa fa-shopping-cart"></span>
+                                <asp:Label ID="LBL_Counter" runat="server" Text="Cart ( 0 | 0 )"></asp:Label>
+                            </a>
+                            <a href="Login.aspx" class="btn btn-sm btn-outline-primary mr-sm-2">Log In</a>
+                            <a href="Register.aspx" class="btn btn-sm btn-outline-secondary">Sign Up</a>
+                        </div>
+                    </div>
+                </div>
+            </ContentTemplate>
+        </asp:UpdatePanel>
         <div class="body-content">
             <asp:ContentPlaceHolder ID="MainContent" runat="server" />
         </div>

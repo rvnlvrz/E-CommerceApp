@@ -13,5 +13,10 @@ namespace E_CommerceApp
         {
 
         }
+
+        public void SetText(params object[] values)
+        {
+            LBL_Counter.Text = string.Format("Cart ({0} | {1:C})", values[0], values[1]);
+        }
     }
 }

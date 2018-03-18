@@ -13,13 +13,14 @@ namespace E_CommerceApp
 
         #region Global Variables
         string user;
-        int cartNum; 
+        int cartNum;
+        private readonly UserCart _cart = UserCart.Instance;
         #endregion
 
         protected void Page_Load(object sender, EventArgs e)
         {
 
-            if(Session["refNum"] != null)
+            if (Session["refNum"] != null)
             {
                 cartNum = Convert.ToInt32(((Session["refNum"])));
             }
@@ -46,6 +47,9 @@ namespace E_CommerceApp
                 lvw_totals.DataSource = DBOps.BuildUserCartTotals(cartNum);
                 lvw_totals.DataBind();
             }
+
+            SiteMaster master = Page.Master as SiteMaster;
+            master.SetText(_cart.totalItemQuantity, _cart.totalCartPrice);
         }
 
         /// <summary>

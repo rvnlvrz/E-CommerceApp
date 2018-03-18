@@ -12,7 +12,7 @@
                     <div class="row">
                         <div class="col col-sm-8">
                             <div class="container">
-                                <asp:ListView ID="lvw_items" runat="server" OnItemCommand="lvw_items_ItemCommand" OnPagePropertiesChanging="lvw_items_PagePropertiesChanging" OnSelectedIndexChanging="lvw_items_SelectedIndexChanging" OnSelectedIndexChanged="lvw_items_SelectedIndexChanged">
+                                <asp:ListView ID="lvw_items" runat="server" OnItemCommand="lvw_items_ItemCommand" OnPagePropertiesChanging="lvw_items_PagePropertiesChanging">
                                     <LayoutTemplate>
                                         <tr id="itemPlaceholderContainer" runat="server">
                                             <td id="itemPlaceholder" runat="server"></td>
@@ -67,7 +67,7 @@
                                                                 <br />
                                                                 <asp:TextBox ID="tbx_qty" runat="server" CssClass="form-control" TextMode="Number" Text='<%# Eval("quantity") %>' min="1" max="99" step="1" OnTextChanged="tbx_qty_TextChanged" AutoPostBack="true"></asp:TextBox>
                                                             </div>
-                                                            <asp:Button ID="btn_remove" runat="server" CssClass="btn btn-outline-danger btn-block" Text="Remove from cart" CommandArgument='<%#Eval("sku")+","+ Eval("price")+","+ Eval("quantity")%>' UseSubmitBehavior="false" />
+                                                            <asp:Button ID="btn_remove" runat="server" CssClass="btn btn-outline-danger btn-block" Text="Remove from cart" CommandArgument='<%#Eval("sku")+","+ Eval("price")+","+ Eval("quantity")%>' OnClientClick="return confirm('Are you sure you want to delete this item?')" UseSubmitBehavior="true" />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -126,6 +126,7 @@
                 </div>
             </ContentTemplate>
         </asp:UpdatePanel>
+        <br />
     </div>
     <%-- Data source --%>
     <asp:SqlDataSource ID="cartDatasource" runat="server" ConnectionString="<%$ ConnectionStrings:CartConnectionString %>" DeleteCommand="DELETE FROM [purchases] WHERE [Id] = @Id" InsertCommand="INSERT INTO [purchases] ([customer], [items], [prices], [quants], [totalCount], [totalPrice]) VALUES (@customer, @items, @prices, @quants, @totalCount, @totalPrice)" SelectCommand="SELECT * FROM [purchases]" UpdateCommand="UPDATE [purchases] SET [customer] = @customer, [items] = @items, [prices] = @prices, [quants] = @quants, [totalCount] = @totalCount, [totalPrice] = @totalPrice WHERE [Id] = @Id" OnUpdating="cartDatasource_Updating" OnDeleting="cartDatasource_Deleting">
@@ -150,9 +151,13 @@
             <asp:Parameter Name="Id" Type="Int32" />
         </UpdateParameters>
     </asp:SqlDataSource>
-    <asp:SqlDataSource ID="ProductsDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:ProductsConnectionString %>" SelectCommand="SELECT [img_url] FROM [Products] WHERE ([sku] = @sku)">
+    <asp:SqlDataSource ID="ProductsDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:ProductsConnectionString %>" SelectCommand="SELECT [img_url] FROM [Products] WHERE ([sku] = @sku)" UpdateCommand="UPDATE Products SET [qty] = @qty WHERE [sku] = @sku" OnUpdating="ProductsDataSource_Updating">
         <SelectParameters>
             <asp:Parameter Name="sku" Type="String" />
         </SelectParameters>
+        <UpdateParameters>
+            <asp:Parameter Name="sku" Type="String" />
+            <asp:Parameter Name="qty" Type="Int32" />
+        </UpdateParameters>
     </asp:SqlDataSource>
 </asp:Content>

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Web.UI;
 using System.Web.UI.WebControls;
 
 namespace E_CommerceApp
@@ -11,6 +12,8 @@ namespace E_CommerceApp
         private int _tempId = -1;
         private string _currUser = "-";
         private string _referenceKey = string.Empty;
+        private int _itemQuant = 0;
+        private string _itemSKU = string.Empty;
         #endregion
 
         protected void Page_Load(object sender, EventArgs e)
@@ -98,17 +101,42 @@ namespace E_CommerceApp
 
             string[] productDetails = ((String)e.CommandArgument).Split(',');
             _cart.AddItem(productDetails[0].Trim(), Convert.ToDecimal(productDetails[1].Trim()), 1);
+
+            _itemSKU = productDetails[0].Trim();
+
+            bool CanBeAdded = _cart.ItemCanBeAdded(_itemSKU, 1, _userCartId);
+            int productQuant = DBOps.GetProductQuantity(_itemSKU);
+
             if (!DBOps.RecordExists(_userCartId))
             {
-                CartDataSource.Insert();
+                if (productQuant > 0)
+                {
+                    CartDataSource.Insert();
+                    _itemQuant = productQuant - 1;
+                    ProductsDataSource.Update();
+                }
             }
             else
             {
-                CartDataSource.Update();
+                if (CanBeAdded && productQuant > 0)
+                {
+                    _itemQuant = productQuant - 1;
+                    CartDataSource.Update();
+                    ProductsDataSource.Update();
+                }
+                else if (productQuant == 0)
+                {
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "notif",
+                       "alert('ITEM NOT ADDED. This product is currently out of stock. Try again later.')", true);
+                }
+                else if (!CanBeAdded)
+                {
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "notif",
+                        string.Format("alert('ITEM NOT ADDED. You either have the maximum number of it in your cart or adding the specified amount of {0} will exceed the limit of 99.')",
+                        1), true);
+                }
             }
 
-            Label lbl = (Label)Parent.Page.Master?.FindControl("MainLabel");
-            if (lbl != null) lbl.Text = 3.ToString();
         }
 
         protected void CartDataSource_Updating(object sender, SqlDataSourceCommandEventArgs e)
@@ -120,6 +148,8 @@ namespace E_CommerceApp
             e.Command.Parameters["@quants"].Value = _cart.lastInsertedQuant;
             e.Command.Parameters["@totalCount"].Value = _cart.totalItemQuantity;
             e.Command.Parameters["@totalPrice"].Value = _cart.totalCartPrice;
+            SiteMaster master = Page.Master as SiteMaster;
+            master.SetText(_cart.totalItemQuantity, _cart.totalCartPrice);
         }
 
         protected void CartDataSource_Inserting(object sender, SqlDataSourceCommandEventArgs e)
@@ -131,18 +161,25 @@ namespace E_CommerceApp
             e.Command.Parameters["@totalCount"].Value = _cart.totalItemQuantity;
             e.Command.Parameters["@totalPrice"].Value = _cart.totalCartPrice;
             e.Command.Parameters["@reference_key"].Value = _referenceKey;
+            SiteMaster master = Page.Master as SiteMaster;
+            master.SetText(_cart.totalItemQuantity, _cart.totalCartPrice);
         }
 
         protected void CartDataSource_Deleting(object sender, SqlDataSourceCommandEventArgs e)
         {
             e.Command.Parameters["@original_Id"].Value = DBOps.GetLatestEntry();
-
         }
 
         protected void userInfoDataSource_Updating(object sender, SqlDataSourceCommandEventArgs e)
         {
             e.Command.Parameters["@Id"].Value = DBOps.GetUserID(_currUser);
             e.Command.Parameters["@latest_cart_id"].Value = _userCartId;
+        }
+
+        protected void ProductsDataSource_Updating(object sender, SqlDataSourceCommandEventArgs e)
+        {
+            e.Command.Parameters["@sku"].Value = _itemSKU;
+            e.Command.Parameters["@qty"].Value = _itemQuant;
         }
     }
     #endregion

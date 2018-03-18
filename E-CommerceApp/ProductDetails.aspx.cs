@@ -20,6 +20,8 @@ namespace E_CommerceApp
         private int _tempId = -1;
         private string _currUser = "-";
         private string _referenceKey = string.Empty;
+        private int _itemQuant = 0;
+        private string _itemSKU = string.Empty;
         #endregion
 
         protected void Page_Load(object sender, EventArgs e)
@@ -33,7 +35,7 @@ namespace E_CommerceApp
             CreateDetails();
             CreateCarousel();
 
-            
+
 
             #region Cart ID Logic
             if (Session["currUser"] != null)
@@ -90,8 +92,11 @@ namespace E_CommerceApp
             else
             {
                 _referenceKey = ((string)(Session["refkey"]));
-            } 
+            }
             #endregion
+
+            SiteMaster master = Page.Master as SiteMaster;
+            master.SetText(_cart.totalItemQuantity, _cart.totalCartPrice);
         }
 
         #region Product Details Logic
@@ -195,15 +200,47 @@ namespace E_CommerceApp
                 _cart.cartID = _userCartId;
             }
 
+            _itemSKU = _result?["sku"].ToString();
+            int currValue = Convert.ToInt32(tbxQty.Text);
+            bool CanBeAdded = _cart.ItemCanBeAdded(_itemSKU, Convert.ToInt32(tbxQty.Text), _userCartId);
+            int productQuant = DBOps.GetProductQuantity(_itemSKU);
+
+
             _cart.AddItem(_result?["sku"].ToString(), Convert.ToDecimal($"{_result?["price"]}"), Convert.ToInt32(tbxQty.Text));
             if (!DBOps.RecordExists(_userCartId))
             {
-                CartDataSource.Insert();
+                if (productQuant > 0)
+                {
+                    CartDataSource.Insert();
+                    _itemQuant = productQuant - Convert.ToInt32(tbxQty.Text);
+                    Products.Update();
+                }
             }
             else
             {
-                CartDataSource.Update();
+                if (CanBeAdded && productQuant > 0)
+                {
+                    CartDataSource.Update();
+                    _itemQuant = productQuant - Convert.ToInt32(tbxQty.Text);
+                    Products.Update();
+                }
+                else if (productQuant == 0)
+                {
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "notif",
+                       "alert('ITEM NOT ADDED. This product is currently out of stock. Try again later.')", true);
+                }
+                else if (!CanBeAdded)
+                {
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "notif",
+                        string.Format("alert('ITEM NOT ADDED. You either have the maximum number of it in your cart or adding the specified amount of {0} will exceed the limit of 99.')",
+                        tbxQty.Text), true);
+                }
+
             }
+
+            SiteMaster master = Page.Master as SiteMaster;
+            master.SetText(_cart.totalItemQuantity, _cart.totalCartPrice);
+
         }
 
         protected void CartDataSource_Updating(object sender, SqlDataSourceCommandEventArgs e)
@@ -238,6 +275,25 @@ namespace E_CommerceApp
         {
             e.Command.Parameters["@Id"].Value = DBOps.GetUserID(_currUser);
             e.Command.Parameters["@latest_cart_id"].Value = _userCartId;
+        }
+
+        protected void tbxQty_TextChanged(object sender, EventArgs e)
+        {
+            int currValue = Convert.ToInt32(tbxQty.Text);
+            if (currValue > 99)
+            {
+                tbxQty.Text = "99";
+            }
+            else if (currValue <= 0)
+            {
+                tbxQty.Text = "1";
+            }
+        }
+
+        protected void Products_Updating(object sender, SqlDataSourceCommandEventArgs e)
+        {
+            e.Command.Parameters["@sku"].Value = _itemSKU;
+            e.Command.Parameters["@qty"].Value = _itemQuant;
         }
     }
 }

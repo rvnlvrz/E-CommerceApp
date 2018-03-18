@@ -47,5 +47,12 @@
             <asp:TextBox ID="TxtSearch" runat="server" CssClass="form-control form-control-lg" Placeholder="Search"></asp:TextBox>
         </div>
     </div>
-    <uc1:ProductListControl runat="server" id="ProductListControl" />
+    <asp:UpdatePanel ID="UpdatePanel1" runat="server" ChildrenAsTriggers="true">
+        <Triggers>
+            <asp:AsyncPostBackTrigger ControlID="ProductListControl" />
+        </Triggers>
+        <ContentTemplate>
+            <uc1:ProductListControl runat="server" ID="ProductListControl" />
+        </ContentTemplate>
+    </asp:UpdatePanel>
 </asp:Content>

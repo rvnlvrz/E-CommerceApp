@@ -105,11 +105,10 @@
                         </div>
 
                         <div class="form-group col-sm-4">
-                            <asp:TextBox ID="card_expiryTextBox" runat="server" Text='<%# Bind("card_expiry") %>' CssClass="form-control" TextMode="Date"
-                                Placeholder="Card Expiration Date" />
+                            <asp:Label ID="Label5" runat="server" CssClass="form-label" Text="Valid Until"></asp:Label>
+                            <asp:TextBox ID="card_expiryTextBox" runat="server" Text='<%# Bind("card_expiry") %>' CssClass="form-control" TextMode="Date" />
+                            <asp:RequiredFieldValidator ID="RequiredFieldValidator13" runat="server" ErrorMessage="This field is required or the date entered is invalid." ControlToValidate="card_expiryTextBox" ForeColor="#FF5050" Display="Dynamic"></asp:RequiredFieldValidator>
                             <asp:CompareValidator ID="CompareValidator2" runat="server" ControlToValidate="card_expiryTextBox" Display="Dynamic" ErrorMessage="Please enter a valid date." ForeColor="#FF5050" Type="Date" Operator="DataTypeCheck"></asp:CompareValidator>
-
-
                         </div>
                         <div class="form-group col-sm-4">
                             <asp:TextBox ID="card_secNumberTextBox" runat="server" Text='<%# Bind("card_secNumber") %>' CssClass="form-control"
@@ -124,6 +123,7 @@
                 <asp:LinkButton ID="InsertCancelButton" runat="server" CausesValidation="False" CommandName="Cancel" Text="Reset Fields" CssClass="btn btn-outline-danger" />
             </InsertItemTemplate>
         </asp:FormView>
+        <br />
         <asp:SqlDataSource ID="UserInfoDatabase" runat="server" ConnectionString="<%$ ConnectionStrings:UserConnectionString %>" DeleteCommand="DELETE FROM [userInfo] WHERE [Id] = @Id" InsertCommand="INSERT INTO [userInfo] ([first_name], [middle_name], [last_name], [email], [password], [contact_number], [address], [postal_code], [card_owner], [card_number], [card_expiry], [card_secNumber], [latest_cart_id]) VALUES (@first_name, @middle_name, @last_name, @email, @password, @contact_number, @address, @postal_code, @card_owner, @card_number, @card_expiry, @card_secNumber, @latest_cart_id)" SelectCommand="SELECT * FROM [userInfo]" UpdateCommand="UPDATE [userInfo] SET [first_name] = @first_name, [middle_name] = @middle_name, [last_name] = @last_name, [email] = @email, [password] = @password, [contact_number] = @contact_number, [address] = @address, [postal_code] = @postal_code, [card_owner] = @card_owner, [card_number] = @card_number, [card_expiry] = @card_expiry, [card_secNumber] = @card_secNumber, [latest_cart_id] = @latest_cart_id WHERE [Id] = @Id" OnInserting="UserInfoDatabase_Inserting">
             <InsertParameters>
                 <asp:Parameter Name="first_name" Type="String" />

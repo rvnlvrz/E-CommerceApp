@@ -119,6 +119,7 @@
                 </div>
             </ContentTemplate>
         </asp:UpdatePanel>
+        <br />
     </div>
     <asp:SqlDataSource ID="ProductsDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:ProductsConnectionString %>" SelectCommand="SELECT [img_url] FROM [Products] WHERE ([sku] = @sku)">
         <SelectParameters>

@@ -1,5 +1,4 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ProductListControl.ascx.cs" Inherits="E_CommerceApp.ProductListControl" %>
-
 <%@ Register TagPrefix="uc1" TagName="ProductCardControl" Src="~/ProductCardControl.ascx" %>
 
 <div class="container my-4">
@@ -22,7 +21,14 @@
         <ItemTemplate>
             <td runat="server">
                 <%-- Product Card --%>
-                <uc1:ProductCardControl runat="server" ID="ProductCardControl" />
+                <asp:UpdatePanel ID="UpdatePanel1" runat="server" ChildrenAsTriggers="true" UpdateMode="Always">
+                    <Triggers>
+                        <asp:AsyncPostBackTrigger ControlID="ProductCardControl" />
+                    </Triggers>
+                    <ContentTemplate>
+                        <uc1:ProductCardControl runat="server" ID="ProductCardControl" />
+                    </ContentTemplate>
+                </asp:UpdatePanel>
             </td>
         </ItemTemplate>
         <LayoutTemplate>
@@ -56,7 +62,12 @@
 </div>
 
 <%-- Data Source --%>
-<asp:SqlDataSource ID="ProductsDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:ProductsConnectionString %>" SelectCommand="SELECT * FROM [Products]"></asp:SqlDataSource>
+<asp:SqlDataSource ID="ProductsDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:ProductsConnectionString %>" SelectCommand="SELECT * FROM [Products]" UpdateCommand="UPDATE Products SET [qty] = @qty WHERE [sku] = @sku" OnUpdating="ProductsDataSource_Updating">
+    <UpdateParameters>
+        <asp:Parameter Name="sku" Type="String" />
+        <asp:Parameter Name="qty" Type="Int32" />
+    </UpdateParameters>
+</asp:SqlDataSource>
 <asp:SqlDataSource ID="CartDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:CartConnectionString %>" DeleteCommand="DELETE FROM [purchases] WHERE [Id] = @original_Id" InsertCommand="INSERT INTO [purchases] ([customer], [items], [prices], [quants], [totalCount], [totalPrice], [reference_key]) VALUES (@customer, @items, @prices, @quants, @totalCount, @totalPrice, @reference_key)" OldValuesParameterFormatString="original_{0}" SelectCommand="SELECT * FROM [purchases]" UpdateCommand="UPDATE [purchases] SET [customer] = @customer, [items] = @items, [prices] = @prices, [quants] = @quants, [totalCount] = @totalCount, [totalPrice] = @totalPrice WHERE [Id] = @original_Id" OnInserting="CartDataSource_Inserting" OnUpdating="CartDataSource_Updating" OnDeleting="CartDataSource_Deleting">
     <DeleteParameters>
         <asp:Parameter Name="original_Id" Type="Int32" />

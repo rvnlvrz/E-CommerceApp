@@ -71,11 +71,12 @@ namespace E_CommerceApp
 
                     Session["currUser"] = tbx_mail.Text;
 
-                    //Session["checkSync"] = 1;
+
+                    Session["sync"] = 1;
                     Session.Remove("loginRedirect");
 
                     // force any page that relies on this to take the user's cart ID
-                    Session.Remove("prevID");
+                    //Session.Remove("prevID");
 
                     Response.Redirect(@"~/Cart.aspx");
                 }

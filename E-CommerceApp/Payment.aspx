@@ -30,7 +30,7 @@
                                                     <div class="form-group col-sm-6">
                                                         <asp:Label ID="Label5" runat="server" CssClass="form-label" Text="Valid Until"></asp:Label>
                                                         <asp:TextBox ID="Tbx_Expiry" runat="server" CssClass="form-control form-control-lg"></asp:TextBox>
-                                                        <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ErrorMessage="This field is required" ControlToValidate="Tbx_Expiry" ForeColor="#CC0000" Display="Dynamic"></asp:RequiredFieldValidator>
+                                                        <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ErrorMessage="This field is required or the date entered is invalid." ControlToValidate="Tbx_Expiry" ForeColor="#CC0000" Display="Dynamic"></asp:RequiredFieldValidator>
                                                         <asp:CompareValidator ID="CompareValidator2" runat="server" ControlToValidate="Tbx_Expiry" Display="Dynamic" ErrorMessage="Please enter a valid date." ForeColor="#CC0000" Type="Date" Operator="DataTypeCheck"></asp:CompareValidator>
                                                     </div>
                                                     <div class="form-group col-sm-6">
@@ -89,7 +89,7 @@
                         <br />
 
                     </div>
-
+                    <br />
                 </div>
             </ContentTemplate>
         </asp:UpdatePanel>

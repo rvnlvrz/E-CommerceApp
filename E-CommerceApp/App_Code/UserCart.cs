@@ -329,6 +329,42 @@ namespace E_CommerceApp
             totalItemQuantity = 0;
         }
 
+        /// <summary>
+        /// Validates if the specified item can be added to the cart
+        /// </summary>
+        /// <param name="itemSKU">The SKU of the item to be added to the cart</param>
+        /// <param name="quant">The desired quantity of the item to be added to the cart</param>
+        /// <param name="cartID">The ID of the current cart</param>
+        /// <returns>True if the item can be added to the cart</returns>
+        public bool ItemCanBeAdded(string itemSKU, int quant, int cartID)
+        {
+            string[] s_lastInsertedItem = lastInsertedItem.Split(new string[] { "," },StringSplitOptions.RemoveEmptyEntries);
+            string[] s_lastInsertedQuantity = lastInsertedQuant.Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries);
+            string[] t_originalCartDetails = DBOps.GetUserCart(cartID);
+
+            for (int i = 0; i < s_lastInsertedItem.Length; i++)
+            {
+                if(s_lastInsertedItem[i].Trim() == itemSKU.Trim())
+                {
+                    int t_qaunt = Convert.ToInt32(s_lastInsertedQuantity[i]);
+
+                    /// The variables in the cart object get updated before
+                    /// this method is called. That is why we check if the
+                    /// current quantity will equate to an amount that is
+                    /// greater than 99 or any defined limit.
+                    if(t_qaunt > 99 || (DBOps.GetProductQuantity(itemSKU) == 0))
+                    {
+                        lastInsertedPrice = t_originalCartDetails[1];
+                        lastInsertedQuant = t_originalCartDetails[2];
+                        totalItemQuantity = ComputeTotalItems();
+                        totalCartPrice = ComputeTotalPrice();
+                        return false;
+                    }
+                }
+            }
+
+            return true;
+        }
 
         /// <summary>
         /// Creates a new user cart

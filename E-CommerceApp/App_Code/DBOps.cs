@@ -908,5 +908,31 @@ namespace E_CommerceApp
 
             return table;
         }
+
+        /// <summary>
+        /// Gets the number of the specified item present in the Products database
+        /// </summary>
+        /// <param name="SKU">The SKU of the product in the database</param>
+        /// <returns></returns>
+        public static int GetProductQuantity(string SKU)
+        {
+            string queryString = @"SELECT qty FROM Products WHERE sku=@sku";
+            int data = 0;
+            using (SqlConnection conn = new SqlConnection(productConn))
+            {
+                conn.Open();
+                using (SqlCommand comm = new SqlCommand(queryString, conn))
+                {
+                    comm.Parameters.AddWithValue("@sku", SqlDbType.NVarChar).Value = SKU;
+                    SqlDataReader reader = comm.ExecuteReader();
+                    if (reader.Read())
+                    {
+                        data = Convert.ToInt32(reader["qty"].ToString());
+                    }
+                }
+            }
+
+            return data ;
+        }
     }
 }

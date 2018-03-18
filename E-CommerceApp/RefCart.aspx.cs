@@ -13,6 +13,7 @@ namespace E_CommerceApp
     {
         #region Global Variables
         private string _refKey = "";
+        private readonly UserCart _cart = UserCart.Instance;
         #endregion
 
         protected void Page_Load(object sender, EventArgs e)
@@ -26,6 +27,9 @@ namespace E_CommerceApp
             lvw_totals.DataSource = DBOps.BuildUserCartTotals(_refKey);
             lvw_items.DataBind();
             lvw_totals.DataBind();
+
+            SiteMaster master = Page.Master as SiteMaster;
+            master.SetText(_cart.totalItemQuantity, _cart.totalCartPrice);
         }
 
         protected void btn_goRefCart_Click(object sender, EventArgs e)
