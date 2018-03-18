@@ -20,7 +20,6 @@ Create a simple e-commerce application implementing the requirements below:
 The submission for this project is on March 17, 2018. Please create a user's manual to guide your end-users in using your e-commerce application.
 
 Notes:
-
 *   Add proper layout and styles to your page <br/>
 *   Validate user inputs wherever necessary <br/>
 *   For reference, you can browse the pages of public e-commerce sites like Lazada, Amazon, eBay, etc. <br/>

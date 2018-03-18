@@ -22,48 +22,12 @@ namespace E_CommerceApp {
         protected global::System.Web.UI.WebControls.TextBox TxtSearch;
         
         /// <summary>
-        /// ProductList control.
+        /// ProductListControl control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ListView ProductList;
-        
-        /// <summary>
-        /// ProductsDataSource control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.SqlDataSource ProductsDataSource;
-        
-        /// <summary>
-        /// CartDataSource control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.SqlDataSource CartDataSource;
-        
-        /// <summary>
-        /// userInfoDataSource control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.SqlDataSource userInfoDataSource;
-        
-        /// <summary>
-        /// DirectoryDatasource control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.SqlDataSource DirectoryDatasource;
+        protected global::E_CommerceApp.ProductListControl ProductListControl;
     }
 }

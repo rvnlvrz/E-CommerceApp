@@ -47,7 +47,7 @@
                                             <div class="card">
                                                 <div class="row align-items-center">
                                                     <div class="col col-md-4">
-                                                        <img src="https://www.tmonews.com/wp-content/uploads/2017/03/rediphone7tmo-1-660x544.jpg" class="img-thumbnail" />
+                                                        <img src='<%# RenderImage(Eval("sku"))%>' class="img-thumbnail" />
                                                     </div>
                                                     <div class="col col-md-4">
                                                         <asp:Label ID="lbl_item" runat="server" Text='<%# Eval("item") %>' CssClass="h5"></asp:Label>
@@ -56,7 +56,7 @@
                                                         <br />
                                                         <asp:Label ID="lbl_price" runat="server" Text='<%# Eval("price","{0:c}") %>' CssClass="h6 text-muted"></asp:Label>
                                                     </div>
-                                                    <div class="col-sm-2">
+                                                    <div class="col-md">
                                                         <div class="container">
                                                             <div class="form-group">
                                                                 <asp:Label ID="Label5" runat="server" Text="Quantity (Max: 99)" CssClass="h6 text-muted"></asp:Label>
@@ -120,4 +120,9 @@
             </ContentTemplate>
         </asp:UpdatePanel>
     </div>
+    <asp:SqlDataSource ID="ProductsDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:ProductsConnectionString %>" SelectCommand="SELECT [img_url] FROM [Products] WHERE ([sku] = @sku)">
+        <SelectParameters>
+            <asp:Parameter Name="sku" Type="String" />
+        </SelectParameters>
+    </asp:SqlDataSource>
 </asp:Content>

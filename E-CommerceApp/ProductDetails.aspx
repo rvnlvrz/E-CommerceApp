@@ -2,7 +2,7 @@
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <%-- Start: Add To Cart --%>
-    <div class="container" style="margin-top: 2rem; margin-bottom: 2rem;">
+    <div class="container my-4" >
         <div class="row">
             <%-- End: Add To Cart --%>
             <div class="product-slider col-5">

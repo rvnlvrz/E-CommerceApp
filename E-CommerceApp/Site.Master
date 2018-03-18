@@ -11,10 +11,9 @@
     <asp:PlaceHolder runat="server">
         <%: Scripts.Render("~/bundles/modernizr") %>
     </asp:PlaceHolder>
-
+    <script src="Scripts/page.js" type="text/javascript"></script>
     <webopt:BundleReference runat="server" Path="~/Content/css" />
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
-
 </head>
 
 <body>
@@ -63,22 +62,13 @@
             </Scripts>
         </asp:ScriptManager>
         <div class="body-content">
-            <asp:ContentPlaceHolder ID="MainContent" runat="server">
-            </asp:ContentPlaceHolder>
+            <asp:ContentPlaceHolder ID="MainContent" runat="server" />
         </div>
     </form>
-    <footer class="container-fluid bg-dark">
-        <table style="height: 100px;" class="table">
-            <tbody>
-                <tr>
-                    <td class="align-middle">
-                        &copy;<%: DateTime.Now.Year %> - E-Commerce ASP.NET Application
-                        <br/>
-                        Arvin Kenneth C. Alvarez || Carl Ivan T. Rayos del Sol
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+    <footer class="container-fluid bg-dark text-white col-12 py-4">
+        &copy;<%: DateTime.Now.Year %> - E-Commerce ASP.NET Application
+        <br />
+        Arvin Kenneth C. Alvarez || Carl Ivan T. Rayos del Sol
     </footer>
 </body>
 </html>

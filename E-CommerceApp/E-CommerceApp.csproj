@@ -189,7 +189,9 @@
     <Content Include="Home.aspx" />
     <Content Include="Login.aspx" />
     <Content Include="Payment.aspx" />
+    <Content Include="ProductCardControl.ascx" />
     <Content Include="ProductDetails.aspx" />
+    <Content Include="ProductListControl.ascx" />
     <Content Include="Products.aspx" />
     <Content Include="RefCart.aspx" />
     <Content Include="Register.aspx" />
@@ -226,6 +228,7 @@
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\page.js" />
     <Content Include="Scripts\popper-utils.js" />
     <Content Include="Scripts\popper-utils.min.js" />
     <Content Include="Scripts\popper.js" />
@@ -337,12 +340,26 @@
     <Compile Include="Payment.aspx.designer.cs">
       <DependentUpon>Payment.aspx</DependentUpon>
     </Compile>
+    <Compile Include="ProductCardControl.ascx.cs">
+      <DependentUpon>ProductCardControl.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ProductCardControl.ascx.designer.cs">
+      <DependentUpon>ProductCardControl.ascx</DependentUpon>
+    </Compile>
     <Compile Include="ProductDetails.aspx.cs">
       <DependentUpon>ProductDetails.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="ProductDetails.aspx.designer.cs">
       <DependentUpon>ProductDetails.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ProductListControl.ascx.cs">
+      <DependentUpon>ProductListControl.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ProductListControl.ascx.designer.cs">
+      <DependentUpon>ProductListControl.ascx</DependentUpon>
     </Compile>
     <Compile Include="Products.aspx.cs">
       <DependentUpon>Products.aspx</DependentUpon>
