@@ -209,16 +209,27 @@ namespace E_CommerceApp
             _cart.AddItem(_result?["sku"].ToString(), Convert.ToDecimal($"{_result?["price"]}"), Convert.ToInt32(tbxQty.Text));
             if (!DBOps.RecordExists(_userCartId))
             {
-                if (productQuant > 0)
+                if (CanBeAdded)
                 {
                     CartDataSource.Insert();
                     _itemQuant = productQuant - Convert.ToInt32(tbxQty.Text);
                     Products.Update();
                 }
+                else if (productQuant == 0)
+                {
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "notif",
+                       "alert('ITEM NOT ADDED. This product is currently out of stock. Try again later.')", true);
+                }
+                else if (!CanBeAdded)
+                {
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "notif",
+                        string.Format("alert('ITEM NOT ADDED. You either have the maximum number of it in your cart or adding the specified amount of {0} will exceed the limit of 99.')",
+                        tbxQty.Text), true);
+                }
             }
             else
             {
-                if (CanBeAdded && productQuant > 0)
+                if (CanBeAdded)
                 {
                     CartDataSource.Update();
                     _itemQuant = productQuant - Convert.ToInt32(tbxQty.Text);

@@ -934,5 +934,35 @@ namespace E_CommerceApp
 
             return data ;
         }
+
+        /// <summary>
+        /// Gets the quantity of the specified item in the user's cart
+        /// </summary>
+        /// <param name="cartID">The current cart's ID</param>
+        /// <param name="itemSKU">The SKU of the item</param>
+        /// <returns></returns>
+        public static int GetItemQuantity(int cartID, string itemSKU)
+        {
+            int data = 0;
+
+            string[] originalCartData = GetUserCart(cartID);
+
+            string[] t_lastInsertedItem = originalCartData[0].
+                Split(new string[] { "," },StringSplitOptions.RemoveEmptyEntries);
+            string[] t_lastInsertedQuant = originalCartData[2].
+                Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries);
+
+            for(int i = 0; i < t_lastInsertedItem.Length; i++)
+            {
+                if (t_lastInsertedItem[i] == itemSKU)
+                {
+                    data = Convert.ToInt32(t_lastInsertedQuant[i]);
+                    break;
+                }
+            }
+
+
+            return data;
+        }
     }
 }

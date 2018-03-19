@@ -55,8 +55,8 @@ namespace E_CommerceApp
                 Session["prevID"] = _userCartId;
             }
 
-            _cart.cartID = _userCartId;
-            Session["prevID"] = _userCartId;
+            //_cart.cartID = _userCartId;
+            //Session["prevID"] = _userCartId;
 
             lvw_items.DataSource = DBOps.BuildUserCart(_userCartId);
             lvw_items.DataBind();
@@ -85,7 +85,6 @@ namespace E_CommerceApp
 
             try
             {
-
                 _cart.RemoveItem(productDetails[0].Trim(), Convert.ToDecimal(productDetails[1].Trim()), Convert.ToInt32(productDetails[2].Trim()));
                 cartDatasource.Update();
                 _itemSKU = productDetails[0].Trim();
@@ -119,6 +118,9 @@ namespace E_CommerceApp
             lvw_totals.DataSource = DBOps.BuildUserCartTotals(_userCartId);
             lvw_items.DataBind();
             lvw_totals.DataBind();
+
+            SiteMaster master = Page.Master as SiteMaster;
+            master.SetText(_cart.totalItemQuantity, _cart.totalCartPrice);
         }
 
         protected void cartDatasource_Updating(object sender, SqlDataSourceCommandEventArgs e)
@@ -151,16 +153,26 @@ namespace E_CommerceApp
             Label lblSku = (Label)item.FindControl("lbl_sku");
             Label lblPrice = (Label)item.FindControl("lbl_price");
 
-            int t_originalQuant = Convert.ToInt32(tb.Text);
+            int t_originalQuant = DBOps.GetItemQuantity(_userCartId, lblSku.Text);
+            int t_cartQuantity = Convert.ToInt32(tb.Text);
 
             try
             {
-                _cart.UpdateItem(lblSku.Text, Decimal.Parse(lblPrice.Text, NumberStyles.Currency), Convert.ToInt32(tb.Text));
-                cartDatasource.Update();
-                _itemSKU = lblSku.Text;
-                _itemQuant = (DBOps.GetProductQuantity(_itemSKU) + (t_originalQuant - Convert.ToInt32(tb.Text)));
-                ProductsDataSource.Update();
+                if (t_cartQuantity <= t_originalQuant)
+                {
+                    _cart.UpdateItem(lblSku.Text, Decimal.Parse(lblPrice.Text, NumberStyles.Currency), Convert.ToInt32(tb.Text));
+                    cartDatasource.Update();
 
+                    _itemSKU = lblSku.Text;
+                    _itemQuant = (DBOps.GetProductQuantity(_itemSKU) + Math.Abs((t_originalQuant - Convert.ToInt32(tb.Text))));
+                    ProductsDataSource.Update();
+                }
+                else
+                {
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "notif",
+                        string.Format("alert('ITEM NOT ADDED. The specified quantity of {0} is more than the available stock of the item.')",
+                        t_cartQuantity), true);
+                }
             }
             catch (Exception)
             {
@@ -171,6 +183,9 @@ namespace E_CommerceApp
             lvw_totals.DataSource = DBOps.BuildUserCartTotals(_userCartId);
             lvw_items.DataBind();
             lvw_totals.DataBind();
+
+            SiteMaster master = Page.Master as SiteMaster;
+            master.SetText(_cart.totalItemQuantity, _cart.totalCartPrice);
         }
 
         protected void Button1_Click(object sender, EventArgs e)
@@ -191,6 +206,8 @@ namespace E_CommerceApp
 
         }
 
+
+        #region DataSource Methods
         protected void lvw_items_PagePropertiesChanging(object sender, PagePropertiesChangingEventArgs e)
         {
             // Prevent the pager from showing an empty page
@@ -213,6 +230,14 @@ namespace E_CommerceApp
             Response.Redirect("~/RefCart.aspx");
         }
 
+        protected void ProductsDataSource_Updating(object sender, SqlDataSourceCommandEventArgs e)
+        {
+            e.Command.Parameters["@sku"].Value = _itemSKU;
+            e.Command.Parameters["@qty"].Value = _itemQuant;
+        }
+
+        #endregion
+
         // Handles image src logic
         protected string RenderImage(object sku)
         {
@@ -230,10 +255,5 @@ namespace E_CommerceApp
             return files[0];
         }
 
-        protected void ProductsDataSource_Updating(object sender, SqlDataSourceCommandEventArgs e)
-        {
-            e.Command.Parameters["@sku"].Value = _itemSKU;
-            e.Command.Parameters["@qty"].Value = _itemQuant;
-        }
     }
 }

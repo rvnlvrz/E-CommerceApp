@@ -109,7 +109,7 @@ namespace E_CommerceApp
 
             if (!DBOps.RecordExists(_userCartId))
             {
-                if (productQuant > 0)
+                if (CanBeAdded)
                 {
                     CartDataSource.Insert();
                     _itemQuant = productQuant - 1;

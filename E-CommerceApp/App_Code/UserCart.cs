@@ -346,13 +346,13 @@ namespace E_CommerceApp
             {
                 if(s_lastInsertedItem[i].Trim() == itemSKU.Trim())
                 {
-                    int t_qaunt = Convert.ToInt32(s_lastInsertedQuantity[i]);
+                    int t_quant = Convert.ToInt32(s_lastInsertedQuantity[i]);
 
                     /// The variables in the cart object get updated before
                     /// this method is called. That is why we check if the
                     /// current quantity will equate to an amount that is
                     /// greater than 99 or any defined limit.
-                    if(t_qaunt > 99 || (DBOps.GetProductQuantity(itemSKU) == 0))
+                    if(t_quant > 99 || (DBOps.GetProductQuantity(itemSKU) == 0))
                     {
                         lastInsertedPrice = t_originalCartDetails[1];
                         lastInsertedQuant = t_originalCartDetails[2];
