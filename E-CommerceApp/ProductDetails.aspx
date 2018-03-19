@@ -27,50 +27,42 @@
             </div>
             <%-- Data Source --%>
             <div class="col-7">
-                <asp:UpdatePanel ID="UpdatePanel3" runat="server" UpdateMode="Always">
+                <asp:Label ID="lblTitle" runat="server" CssClass="h2"></asp:Label>
+                <hr />
+                <span id="Description" runat="server" class="text-secondary"></span>
+                <br />
+                <br />
+                <asp:UpdatePanel ID="Sku_upl" runat="server" ChildrenAsTriggers="true">
+                    <Triggers>
+                        <asp:AsyncPostBackTrigger ControlID="tbxQty" />
+                        <asp:AsyncPostBackTrigger ControlID="btnAddToCart" />
+                    </Triggers>
                     <ContentTemplate>
-                        <asp:Label ID="lblTitle" runat="server" CssClass="h2"></asp:Label>
-                        <hr />
-                        <span id="Description" runat="server" class="text-secondary"></span>
-                        <br />
-                        <br />
-                        <asp:UpdatePanel ID="UpdatePanel4" runat="server" ChildrenAsTriggers="true" UpdateMode="Always">
-                            <ContentTemplate>
-                                <asp:Label ID="lblAvailability" runat="server" Text="Availability:" CssClass="text-secondary"></asp:Label>
-                                <span id="Availability" runat="server"></span>
-                            </ContentTemplate>
-                        </asp:UpdatePanel>
-
-                        <br />
-                        <br />
-                        <asp:Label ID="lblSKU" runat="server" Text="SKU:" CssClass="text-secondary"></asp:Label>
-                        <span id="SKU" runat="server"></span>
-                        <br />
-                        <br />
-                        <h4 id="Price" runat="server" class="font-weight-bold"></h4>
-                        <%-- Start: Add To Cart --%>
+                        <asp:Label ID="lblAvailability" runat="server" Text="Availability:" CssClass="text-secondary"></asp:Label>
+                        <span id="Availability" runat="server"></span>
                     </ContentTemplate>
                 </asp:UpdatePanel>
-                <div class="input-group my-3">
-                    <asp:UpdatePanel ID="UpdatePanel2" runat="server" ChildrenAsTriggers="true">
-                        <Triggers>
-                            <asp:AsyncPostBackTrigger ControlID="tbxQty" />
-                        </Triggers>
-                        <ContentTemplate>
+                <br />
+                <asp:Label ID="lblSKU" runat="server" Text="SKU:" CssClass="text-secondary"></asp:Label>
+                <span id="SKU" runat="server"></span>
+                <br />
+                <br />
+                <h4 id="Price" runat="server" class="font-weight-bold"></h4>
+                <%-- Start: Add To Cart --%>
+                <asp:UpdatePanel ID="BtnSel_upl" runat="server" ChildrenAsTriggers="true">
+                    <Triggers>
+                        <asp:AsyncPostBackTrigger ControlID="tbxQty" />
+                        <asp:AsyncPostBackTrigger ControlID="btnAddToCart" />
+                    </Triggers>
+                    <ContentTemplate>
+                        <div class="input-group my-3">
                             <asp:TextBox ID="tbxQty" runat="server" TextMode="Number" CssClass="pl-2" OnTextChanged="tbxQty_TextChanged">1</asp:TextBox>
-                        </ContentTemplate>
-                    </asp:UpdatePanel>
-                    <div class="input-group-append">
-                        <asp:UpdatePanel ID="UpdatePanel1" runat="server" ChildrenAsTriggers="true">
-                            <Triggers>
-                                <asp:AsyncPostBackTrigger ControlID="btnAddToCart" />
-                            </Triggers>
-                            <ContentTemplate>
+                            <div class="input-group-append">
                                 <asp:Button ID="btnAddToCart" runat="server" Text="Add to Cart" CssClass="btn btn-primary" OnClick="btnAddToCart_Click" />
-                            </ContentTemplate>
-                        </asp:UpdatePanel>
-                    </div>
-                </div>
+                            </div>
+                        </div>
+                    </ContentTemplate>
+                </asp:UpdatePanel>
                 <%-- End: Add To Cart --%>
             </div>
         </div>

@@ -173,7 +173,7 @@ namespace E_CommerceApp
                 /// user adds a specified amount of the item to the cart
                 if (t_currCartQuantity - t_cartQuantity < 0)
                 {
-                    if (t_itemStock > t_cartQuantity || t_sessionQuant >= t_cartQuantity)
+                    if (t_itemStock >= t_cartQuantity || t_sessionQuant >= t_cartQuantity)
                     {
                         _cart.UpdateItem(lblSku.Text, Decimal.Parse(lblPrice.Text, NumberStyles.Currency), Convert.ToInt32(tb.Text));
                         cartDatasource.Update();
@@ -208,7 +208,6 @@ namespace E_CommerceApp
 
             SiteMaster master = Page.Master as SiteMaster;
             master.UpdateTotalCounters();
-            Session.Remove("itemQuant");
 
         }
 

@@ -35,8 +35,6 @@ namespace E_CommerceApp
             CreateDetails();
             CreateCarousel();
 
-
-
             #region Cart ID Logic
             if (Session["currUser"] != null)
             {
@@ -94,9 +92,6 @@ namespace E_CommerceApp
                 _referenceKey = (string)Session["refkey"];
             }
             #endregion
-
-            SiteMaster master = Page.Master as SiteMaster;
-            master.UpdateTotalCounters();
         }
 
         #region Product Details Logic
@@ -233,7 +228,7 @@ namespace E_CommerceApp
             {
                 if (proceed)
                 {
-                    CartDataSource.Insert();
+                    CartDataSource.Update();
                     _itemQuant = productQuant - Convert.ToInt32(tbxQty.Text);
                     Products.Update();
                 }
@@ -247,7 +242,6 @@ namespace E_CommerceApp
                     ScriptManager.RegisterStartupScript(this, GetType(), "notif",
                         string.Format("alert('ITEM NOT ADDED. You either have the maximum number of it in your cart or adding the specified amount of {0} will exceed the limit of 99.')",
                         tbxQty.Text), true);
-
                 }
             }
 
