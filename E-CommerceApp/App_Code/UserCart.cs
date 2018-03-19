@@ -67,7 +67,7 @@ namespace E_CommerceApp
 
             //if the cart is from a returning user, use the stuff in there instead.
             //make sure that the details associated to the cart are properly extracted.
-            if (((lastInsertedItem != string.Empty) && (lastInsertedItem != null)))
+            if (lastInsertedItem != string.Empty && lastInsertedItem != null)
             {
                 if (Regex.IsMatch(lastInsertedItem, string.Format(@"\b{0}\b", itemSKU)))
                 {
@@ -85,7 +85,7 @@ namespace E_CommerceApp
 
                     if (index != -1)
                     {
-                        int qT = (Convert.ToInt32(quantities[index].Trim()) + (quant));
+                        int qT = Convert.ToInt32(quantities[index].Trim()) + quant;
                         quantities[index] = qT.ToString();
                         prices[index] = (price * qT).ToString();
                         lastInsertedPrice = string.Join(",", prices);
@@ -137,7 +137,7 @@ namespace E_CommerceApp
             totalCartPrice = Convert.ToDecimal(holdData[3]);
             totalItemQuantity = Convert.ToInt32(holdData[4]);
 
-            if (((lastInsertedItem != string.Empty) && (lastInsertedItem != null)))
+            if (lastInsertedItem != string.Empty && lastInsertedItem != null)
             {
                 string[] items = lastInsertedItem.Split(',');
                 List<string> newItems = new List<string>();
@@ -160,9 +160,9 @@ namespace E_CommerceApp
                         string[] prices = lastInsertedPrice.Split(',');
                         string[] quantities = lastInsertedQuant.Split(',');
                         int orriginalQuant = Convert.ToInt32(quantities[index].Trim());
-                        int qT = (Convert.ToInt32(quantities[index].Trim()) - (quant));
+                        int qT = Convert.ToInt32(quantities[index].Trim()) - quant;
                         quantities[index] = qT.ToString();
-                        prices[index] = ((price / orriginalQuant) * qT).ToString();
+                        prices[index] = (price / orriginalQuant * qT).ToString();
 
                         if (qT <= 0)
                         {
@@ -210,7 +210,7 @@ namespace E_CommerceApp
             totalCartPrice = Convert.ToDecimal(holdData[3]);
             totalItemQuantity = Convert.ToInt32(holdData[4]);
 
-            if (((lastInsertedItem != string.Empty) && (lastInsertedItem != null)))
+            if (lastInsertedItem != string.Empty && lastInsertedItem != null)
             {
                 string[] items = lastInsertedItem.Split(',');
                 List<string> newItems = new List<string>();
@@ -233,7 +233,7 @@ namespace E_CommerceApp
                         string[] prices = lastInsertedPrice.Split(',');
                         string[] quantities = lastInsertedQuant.Split(',');
                         int originalQuant = Convert.ToInt32(quantities[index].Trim());
-                        int qT = (Convert.ToInt32(quant));
+                        int qT = Convert.ToInt32(quant);
                         quantities[index] = qT.ToString();
                         prices[index] = (price * qT).ToString();
 
@@ -352,7 +352,7 @@ namespace E_CommerceApp
                     /// this method is called. That is why we check if the
                     /// current quantity will equate to an amount that is
                     /// greater than 99 or any defined limit.
-                    if(t_quant > 99 || (DBOps.GetProductQuantity(itemSKU) <= 0))
+                    if(t_quant > 99 || DBOps.GetProductQuantity(itemSKU) <= 0)
                     {
                         lastInsertedPrice = t_originalCartDetails[1];
                         lastInsertedQuant = t_originalCartDetails[2];

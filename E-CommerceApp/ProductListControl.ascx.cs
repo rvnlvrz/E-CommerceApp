@@ -4,7 +4,7 @@ using System.Web.UI.WebControls;
 
 namespace E_CommerceApp
 {
-    public partial class ProductListControl : System.Web.UI.UserControl
+    public partial class ProductListControl : UserControl
     {
         #region Global Variables
         private readonly UserCart _cart = UserCart.Instance;
@@ -13,14 +13,14 @@ namespace E_CommerceApp
         private string _currUser = "-";
         private string _referenceKey = string.Empty;
         private int _itemQuant = 0;
-        private string _itemSKU = string.Empty;
+        private string _itemSku = string.Empty;
         #endregion
 
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Session["currUser"] != null)
             {
-                _currUser = (string)(Session["currUser"]);
+                _currUser = (string)Session["currUser"];
                 _tempId = DBOps.GetLatestEntry(DBOps.GetUserID(_currUser));
 
                 if (_tempId == 0)
@@ -80,7 +80,7 @@ namespace E_CommerceApp
         #region Data Source methods
         protected void ProductList_ItemCommand(object sender, ListViewCommandEventArgs e)
         {
-            if (((_currUser != "-") && (_tempId != 0)))
+            if (_currUser != "-" && _tempId != 0)
             {
                 _cart.cartID = _userCartId;
                 _cart.cartOwner = _currUser;
@@ -88,10 +88,10 @@ namespace E_CommerceApp
                 _cart.lastInsertedItem = items[0];
                 _cart.lastInsertedPrice = items[1];
                 _cart.lastInsertedQuant = items[2];
-                _cart.totalItemQuantity = (Convert.ToInt32(items[3]));
-                _cart.totalCartPrice = (Convert.ToDecimal(items[4]));
+                _cart.totalItemQuantity = Convert.ToInt32(items[3]);
+                _cart.totalCartPrice = Convert.ToDecimal(items[4]);
             }
-            else if (((_currUser != "-") && (_tempId == 0)))
+            else if (_currUser != "-" && _tempId == 0)
             {
                 _cart.cartID = _userCartId;
                 userInfoDataSource.Update();
@@ -104,10 +104,10 @@ namespace E_CommerceApp
             string[] productDetails = ((String)e.CommandArgument).Split(',');
             _cart.AddItem(productDetails[0].Trim(), Convert.ToDecimal(productDetails[1].Trim()), 1);
 
-            _itemSKU = productDetails[0].Trim();
+            _itemSku = productDetails[0].Trim();
 
-            bool CanBeAdded = _cart.ItemCanBeAdded(_itemSKU, 1, _userCartId);
-            int productQuant = DBOps.GetProductQuantity(_itemSKU);
+            bool CanBeAdded = _cart.ItemCanBeAdded(_itemSku, 1, _userCartId);
+            int productQuant = DBOps.GetProductQuantity(_itemSku);
 
             if (!DBOps.RecordExists(_userCartId))
             {
@@ -128,14 +128,13 @@ namespace E_CommerceApp
                 }
                 else if (productQuant == 0)
                 {
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "notif",
+                    ScriptManager.RegisterStartupScript(this, GetType(), "notif",
                        "alert('ITEM NOT ADDED. This product is currently out of stock. Try again later.')", true);
                 }
                 else if (!CanBeAdded)
                 {
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "notif",
-                        string.Format("alert('ITEM NOT ADDED. You either have the maximum number of it in your cart or adding the specified amount of {0} will exceed the limit of 99.')",
-                        1), true);
+                    ScriptManager.RegisterStartupScript(this, GetType(), "notif",
+                        $"alert('ITEM NOT ADDED. You either have the maximum number of it in your cart or adding the specified amount of {1} will exceed the limit of 99.')", true);
                 }
             }
 
@@ -183,7 +182,7 @@ namespace E_CommerceApp
 
         protected void ProductsDataSource_Updating(object sender, SqlDataSourceCommandEventArgs e)
         {
-            e.Command.Parameters["@sku"].Value = _itemSKU;
+            e.Command.Parameters["@sku"].Value = _itemSku;
             e.Command.Parameters["@qty"].Value = _itemQuant;
         }
     }

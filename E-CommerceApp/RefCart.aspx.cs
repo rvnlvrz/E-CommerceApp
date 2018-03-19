@@ -9,7 +9,7 @@ using System.Web.UI.WebControls;
 
 namespace E_CommerceApp
 {
-    public partial class FrmViewRefCart : System.Web.UI.Page
+    public partial class FrmViewRefCart : Page
     {
         #region Global Variables
         private string _refKey = "";

@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 
 namespace E_CommerceApp
 {
-    public partial class frm_login : System.Web.UI.Page
+    public partial class frm_login : Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {

@@ -15,7 +15,7 @@ namespace E_CommerceApp
         {
             if (Session["currUser"] != null)
             {
-                Btn_Login.Text = ((string)(Session["currUser"]));
+                Btn_Login.Text = (string)Session["currUser"];
                 Btn_Login.PostBackUrl = @"~/Cart.aspx";
 
                 Btn_SignUp.Text = "Sign Out";
@@ -38,12 +38,12 @@ namespace E_CommerceApp
         {
             if (Session["prevID"] != null)
             {
-                string[] totals = DBOps.GetUserCartTotals((Convert.ToInt32(Session["prevID"])));
+                string[] totals = DBOps.GetUserCartTotals(Convert.ToInt32(Session["prevID"]));
                 LBL_Counter.Text = string.Format("Cart ({0} | {1:C})", totals[0], Convert.ToDecimal(totals[1]));
             }
             else
             {
-                LBL_Counter.Text = string.Format("Cart ({0} | {1:C})", 0, (Convert.ToDecimal(0.ToString())));
+                LBL_Counter.Text = string.Format("Cart ({0} | {1:C})", 0, Convert.ToDecimal(0.ToString()));
             }
         }
 

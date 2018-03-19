@@ -8,7 +8,7 @@ using System.Data;
 
 namespace E_CommerceApp
 {
-    public partial class frm_payment : System.Web.UI.Page
+    public partial class frm_payment : Page
     {
 
         #region Global Variables
@@ -22,7 +22,7 @@ namespace E_CommerceApp
 
             if (Session["refNum"] != null)
             {
-                cartNum = Convert.ToInt32(((Session["refNum"])));
+                cartNum = Convert.ToInt32(Session["refNum"]);
             }
             else
             {
@@ -31,7 +31,7 @@ namespace E_CommerceApp
 
             if (Session["currUser"] != null)
             {
-                user = (((string)(Session["currUser"])));
+                user = (string)Session["currUser"];
 
                 FormView1.DataSource = DBOps.BuildCreditCardDetails(user);
                 FormView1.DataBind();
@@ -58,11 +58,11 @@ namespace E_CommerceApp
         /// <param name="mode">(0) for any user and (1) for a logged in user</param>
         private void BindControls(int mode)
         {
-            TextBox Tbx_cardOwner = ((TextBox)FormView1.FindControl("Tbx_cardOwner"));
-            TextBox Tbx_cardNum = ((TextBox)FormView1.FindControl("Tbx_cardNum"));
-            TextBox Tbx_Expiry = ((TextBox)FormView1.FindControl("Tbx_Expiry"));
-            TextBox Tbx_secCode = ((TextBox)FormView1.FindControl("Tbx_secCode"));
-            TextBox Tbx_Addr = ((TextBox)FormView1.FindControl("Tbx_Addr"));
+            TextBox Tbx_cardOwner = (TextBox)FormView1.FindControl("Tbx_cardOwner");
+            TextBox Tbx_cardNum = (TextBox)FormView1.FindControl("Tbx_cardNum");
+            TextBox Tbx_Expiry = (TextBox)FormView1.FindControl("Tbx_Expiry");
+            TextBox Tbx_secCode = (TextBox)FormView1.FindControl("Tbx_secCode");
+            TextBox Tbx_Addr = (TextBox)FormView1.FindControl("Tbx_Addr");
 
             switch (mode)
             {
@@ -72,7 +72,7 @@ namespace E_CommerceApp
                         {
                             if (control is TextBox)
                             {
-                                TextBox tbx = ((TextBox)control);
+                                TextBox tbx = (TextBox)control;
                                 tbx.Enabled = true;
                             }
                         }
@@ -87,17 +87,17 @@ namespace E_CommerceApp
                         DataTable dt = (DataTable)FormView1.DataSource;
 
 
-                        Tbx_cardOwner.Text = /*((string)Eval("name"));*/ (dt.Rows[0]["name"]).ToString();
-                        Tbx_cardNum.Text = /*((string)Eval("number"));*/(dt.Rows[0]["number"]).ToString();
+                        Tbx_cardOwner.Text = /*((string)Eval("name"));*/ dt.Rows[0]["name"].ToString();
+                        Tbx_cardNum.Text = /*((string)Eval("number"));*/dt.Rows[0]["number"].ToString();
                         Tbx_Expiry.Text = /*((string)Eval("exp"));*/ Convert.ToDateTime(dt.Rows[0]["exp"]).ToString("d");
-                        Tbx_secCode.Text = /*((string)Eval("secCode"));*/ (dt.Rows[0]["secCode"]).ToString();
-                        Tbx_Addr.Text = /*((string)Eval("address"));*/ (dt.Rows[0]["address"]).ToString();
+                        Tbx_secCode.Text = /*((string)Eval("secCode"));*/ dt.Rows[0]["secCode"].ToString();
+                        Tbx_Addr.Text = /*((string)Eval("address"));*/ dt.Rows[0]["address"].ToString();
 
                         foreach (Control control in FormView1.Controls)
                         {
                             if (control is TextBox)
                             {
-                                TextBox tbx = ((TextBox)control);
+                                TextBox tbx = (TextBox)control;
                                 tbx.Enabled = false;
                             }
                         }

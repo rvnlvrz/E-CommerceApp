@@ -10,7 +10,7 @@ using System.Web.UI;
 
 namespace E_CommerceApp
 {
-    public partial class FrmCheckout1 : System.Web.UI.Page
+    public partial class FrmCheckout1 : Page
     {
         #region Global Variables
         readonly UserCart _cart = UserCart.Instance;
@@ -26,15 +26,15 @@ namespace E_CommerceApp
             // otherwise, use the ID stored in the session variable.
             if (Session["currUser"] != null)
             {
-                _user = (((string)(Session["currUser"])));
+                _user = (string)Session["currUser"];
 
-                _userCartId = (DBOps.GetLatestEntry(DBOps.GetUserID(_user)) != 0) ? DBOps.GetLatestEntry(DBOps.GetUserID(_user)) :
-                    (Convert.ToInt32(Session["prevID"]));
+                _userCartId = DBOps.GetLatestEntry(DBOps.GetUserID(_user)) != 0 ? DBOps.GetLatestEntry(DBOps.GetUserID(_user)) :
+                    Convert.ToInt32(Session["prevID"]);
                 _cart.cartID = _userCartId;
 
                 if (Session["sync"] != null)
                 {
-                    _cart.SyncCart((Convert.ToInt32(Session["prevID"])), _user);
+                    _cart.SyncCart(Convert.ToInt32(Session["prevID"]), _user);
                     cartDatasource.Update();
                     Session["prevID"] = _userCartId;
                     Session.Remove("sync");
@@ -43,7 +43,7 @@ namespace E_CommerceApp
             else
             {
                 _user = "-";
-                _userCartId = (Convert.ToInt32(Session["prevID"]));
+                _userCartId = Convert.ToInt32(Session["prevID"]);
             }
 
             if (Session["prevID"] == null)
@@ -65,7 +65,7 @@ namespace E_CommerceApp
 
             Button button = (Button)UpdatePanel1.FindControl("btn_checkout");
 
-            if ((DBOps.BuildUserCart(_userCartId)).Rows.Count == 0)
+            if (DBOps.BuildUserCart(_userCartId).Rows.Count == 0)
             {
                 button.Enabled = false;
                 button.CssClass = "btn btn-outline-secondary btn-block";
@@ -88,7 +88,7 @@ namespace E_CommerceApp
                 _cart.RemoveItem(productDetails[0].Trim(), Convert.ToDecimal(productDetails[1].Trim()), Convert.ToInt32(productDetails[2].Trim()));
                 cartDatasource.Update();
                 _itemSKU = productDetails[0].Trim();
-                _itemQuant = (DBOps.GetProductQuantity(_itemSKU) + Convert.ToInt32(productDetails[2].Trim()));
+                _itemQuant = DBOps.GetProductQuantity(_itemSKU) + Convert.ToInt32(productDetails[2].Trim());
                 ProductsDataSource.Update();
             }
             catch (Exception)
@@ -97,7 +97,7 @@ namespace E_CommerceApp
             }
 
             Button button = (Button)UpdatePanel1.FindControl("btn_checkout");
-            if (((DBOps.BuildUserCart(_userCartId)).Rows.Count < 1))
+            if (DBOps.BuildUserCart(_userCartId).Rows.Count < 1)
             {
                 if (_user != "-")
                 {
@@ -139,13 +139,11 @@ namespace E_CommerceApp
             TextBox textBox1 = (TextBox)sender;
             ListViewDataItem item = (ListViewDataItem)textBox1.NamingContainer;
             TextBox tb = (TextBox)item.FindControl("tbx_qty"); //get the textbox in the proper listview item
-            if (((Convert.ToInt32(tb.Text) <= 0) || tb.Text == string.Empty)
-                || ((string.IsNullOrEmpty(tb.Text)) || (string.IsNullOrWhiteSpace(tb.Text)))
-                || (tb.Text == DBNull.Value.ToString(CultureInfo.InvariantCulture)))
+            if (Convert.ToInt32(tb.Text) <= 0 || tb.Text == string.Empty || string.IsNullOrEmpty(tb.Text) || string.IsNullOrWhiteSpace(tb.Text) || (tb.Text == DBNull.Value.ToString(CultureInfo.InvariantCulture)))
             {
                 tb.Text = "1";
             }
-            else if ((Convert.ToInt32(tb.Text)) > 99)
+            else if (Convert.ToInt32(tb.Text) > 99)
             {
                 tb.Text = "99";
             }
@@ -173,19 +171,19 @@ namespace E_CommerceApp
                 _itemSKU = lblSku.Text;
 
                 /// user adds a specified amount of the item to the cart
-                if ((t_currCartQuantity - t_cartQuantity) < 0)
+                if (t_currCartQuantity - t_cartQuantity < 0)
                 {
-                    if ((t_itemStock > t_cartQuantity) || (t_sessionQuant >= t_cartQuantity))
+                    if (t_itemStock > t_cartQuantity || t_sessionQuant >= t_cartQuantity)
                     {
                         _cart.UpdateItem(lblSku.Text, Decimal.Parse(lblPrice.Text, NumberStyles.Currency), Convert.ToInt32(tb.Text));
                         cartDatasource.Update();
 
-                        _itemQuant = (DBOps.GetProductQuantity(_itemSKU) - Math.Abs((t_currCartQuantity - t_cartQuantity)));
+                        _itemQuant = DBOps.GetProductQuantity(_itemSKU) - Math.Abs(t_currCartQuantity - t_cartQuantity);
                         ProductsDataSource.Update();
                     }
                     else
                     {
-                        ScriptManager.RegisterStartupScript(this, this.GetType(), "notif",
+                        ScriptManager.RegisterStartupScript(this, GetType(), "notif",
                             string.Format("alert('ITEM NOT ADDED. The specified quantity of {0} is more than the available stock of the item.')",
                             t_cartQuantity), true);
                     }
@@ -194,7 +192,7 @@ namespace E_CommerceApp
                 {
                     _cart.UpdateItem(lblSku.Text, Decimal.Parse(lblPrice.Text, NumberStyles.Currency), Convert.ToInt32(tb.Text));
                     cartDatasource.Update();
-                    _itemQuant = (DBOps.GetProductQuantity(_itemSKU) + Math.Abs((t_currCartQuantity - t_cartQuantity)));
+                    _itemQuant = DBOps.GetProductQuantity(_itemSKU) + Math.Abs(t_currCartQuantity - t_cartQuantity);
                     ProductsDataSource.Update();
                 }
             }
@@ -216,7 +214,7 @@ namespace E_CommerceApp
 
         protected void Button1_Click(object sender, EventArgs e)
         {
-            if (((string)(Session["currUser"])) == null)
+            if ((string)Session["currUser"] == null)
             {
                 Session["loginRedirect"] = "yes";
                 Session["refNum"] = _userCartId;

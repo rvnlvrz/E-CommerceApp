@@ -158,11 +158,11 @@ namespace E_CommerceApp
                     {
                         if (reader.Read())
                         {
-                            items[0] = (reader["items"].ToString());
-                            items[1] = (reader["prices"].ToString());
-                            items[2] = (reader["quants"].ToString());
-                            items[3] = (reader["totalCount"].ToString());
-                            items[4] = (reader["totalPrice"].ToString());
+                            items[0] = reader["items"].ToString();
+                            items[1] = reader["prices"].ToString();
+                            items[2] = reader["quants"].ToString();
+                            items[3] = reader["totalCount"].ToString();
+                            items[4] = reader["totalPrice"].ToString();
                         }
                     }
                 }
@@ -243,11 +243,11 @@ namespace E_CommerceApp
                     SqlDataReader reader = comm.ExecuteReader();
                     if (reader.Read())
                     {
-                        data[0] = (reader[0].ToString());
-                        data[1] = (reader[1].ToString());
-                        data[2] = (reader[2].ToString());
-                        data[3] = (reader[3].ToString());
-                        data[4] = (reader[4].ToString());
+                        data[0] = reader[0].ToString();
+                        data[1] = reader[1].ToString();
+                        data[2] = reader[2].ToString();
+                        data[3] = reader[3].ToString();
+                        data[4] = reader[4].ToString();
                     }
                 }
             }
@@ -273,11 +273,11 @@ namespace E_CommerceApp
                     SqlDataReader reader = comm.ExecuteReader();
                     if (reader.Read())
                     {
-                        data[0] = (reader[0].ToString());
-                        data[1] = (reader[1].ToString());
-                        data[2] = (reader[2].ToString());
-                        data[3] = (reader[3].ToString());
-                        data[4] = (reader[4].ToString());
+                        data[0] = reader[0].ToString();
+                        data[1] = reader[1].ToString();
+                        data[2] = reader[2].ToString();
+                        data[3] = reader[3].ToString();
+                        data[4] = reader[4].ToString();
                     }
                 }
             }
@@ -305,11 +305,11 @@ namespace E_CommerceApp
                     SqlDataReader reader = comm.ExecuteReader();
                     if (reader.Read())
                     {
-                        data[0] = (reader[0].ToString());
-                        data[1] = (reader[1].ToString());
-                        data[2] = (reader[2].ToString());
-                        data[3] = (reader[3].ToString());
-                        data[4] = (reader[4].ToString());
+                        data[0] = reader[0].ToString();
+                        data[1] = reader[1].ToString();
+                        data[2] = reader[2].ToString();
+                        data[3] = reader[3].ToString();
+                        data[4] = reader[4].ToString();
                     }
                 }
             }
@@ -337,8 +337,8 @@ namespace E_CommerceApp
                     SqlDataReader reader = comm.ExecuteReader();
                     if (reader.Read())
                     {
-                        data[0] = (reader[0].ToString());
-                        data[1] = (reader[1].ToString());
+                        data[0] = reader[0].ToString();
+                        data[1] = reader[1].ToString();
                     }
                 }
             }
@@ -364,8 +364,8 @@ namespace E_CommerceApp
                     SqlDataReader reader = comm.ExecuteReader();
                     if (reader.Read())
                     {
-                        data[0] = (reader[0].ToString());
-                        data[1] = (reader[1].ToString());
+                        data[0] = reader[0].ToString();
+                        data[1] = reader[1].ToString();
                     }
                 }
             }
@@ -391,8 +391,8 @@ namespace E_CommerceApp
                     SqlDataReader reader = comm.ExecuteReader();
                     if (reader.Read())
                     {
-                        data[0] = (reader[0].ToString());
-                        data[1] = (reader[1].ToString());
+                        data[0] = reader[0].ToString();
+                        data[1] = reader[1].ToString();
                     }
                 }
             }
@@ -418,11 +418,11 @@ namespace E_CommerceApp
                     SqlDataReader reader = comm.ExecuteReader();
                     if (reader.Read())
                     {
-                        data[0] = (reader[0].ToString());
-                        data[1] = (reader[1].ToString());
-                        data[2] = (reader[2].ToString());
-                        data[3] = (reader[3].ToString());
-                        data[4] = (reader[4].ToString());
+                        data[0] = reader[0].ToString();
+                        data[1] = reader[1].ToString();
+                        data[2] = reader[2].ToString();
+                        data[3] = reader[3].ToString();
+                        data[4] = reader[4].ToString();
                     }
                 }
             }
@@ -677,7 +677,7 @@ namespace E_CommerceApp
             {
                 for (int i = 0; i < items.Length; i++)
                 {
-                    originalPrice = (Convert.ToDecimal(prices[i]) / Convert.ToInt32(quants[i]));
+                    originalPrice = Convert.ToDecimal(prices[i]) / Convert.ToInt32(quants[i]);
                     table.Rows.Add(GetSKUEquiv(items[i]), items[i], originalPrice, Convert.ToInt32(quants[i]), totalCount, totalPrice);
                 }
             }
@@ -763,7 +763,7 @@ namespace E_CommerceApp
             {
                 for (int i = 0; i < items.Length; i++)
                 {
-                    originalPrice = (Convert.ToDecimal(prices[i]) / Convert.ToInt32(quants[i]));
+                    originalPrice = Convert.ToDecimal(prices[i]) / Convert.ToInt32(quants[i]);
                     table.Rows.Add(GetSKUEquiv(items[i]), items[i], originalPrice, Convert.ToInt32(quants[i]), totalCount, totalPrice);
                 }
             }
@@ -850,7 +850,7 @@ namespace E_CommerceApp
             {
                 for (int i = 0; i < items.Length; i++)
                 {
-                    originalPrice = (Convert.ToDecimal(prices[i]) / Convert.ToInt32(quants[i]));
+                    originalPrice = Convert.ToDecimal(prices[i]) / Convert.ToInt32(quants[i]);
                     table.Rows.Add(GetSKUEquiv(items[i]), items[i], originalPrice, Convert.ToInt32(quants[i]), totalCount, totalPrice);
                 }
             }

@@ -40,7 +40,7 @@ namespace E_CommerceApp
             #region Cart ID Logic
             if (Session["currUser"] != null)
             {
-                _currUser = ((string)(Session["currUser"]));
+                _currUser = (string)Session["currUser"];
                 _tempId = DBOps.GetLatestEntry(DBOps.GetUserID(_currUser));
 
                 if (_tempId == 0)
@@ -91,7 +91,7 @@ namespace E_CommerceApp
             }
             else
             {
-                _referenceKey = ((string)(Session["refkey"]));
+                _referenceKey = (string)Session["refkey"];
             }
             #endregion
 
@@ -144,7 +144,7 @@ namespace E_CommerceApp
             {
                 var div = new HtmlGenericControl("div");
                 var img = new Image { ImageUrl = files.ElementAt(i), CssClass = "d-block" };
-                div.Attributes["class"] = (i == 0) ? "carousel-item active" : "carousel-item";
+                div.Attributes["class"] = i == 0 ? "carousel-item active" : "carousel-item";
                 div.Controls.Add(img);
                 InnerCarousel.Controls.Add(div);
             }
@@ -153,7 +153,7 @@ namespace E_CommerceApp
             for (int i = 0; i < files.Count; i++)
             {
                 var div = new HtmlGenericControl("div");
-                div.Attributes["class"] = (i == 0) ? "carousel-item active" : "carousel-item";
+                div.Attributes["class"] = i == 0 ? "carousel-item active" : "carousel-item";
 
                 for (int j = 0; j < 4 && i < files.Count; j++)
                 {
@@ -179,7 +179,7 @@ namespace E_CommerceApp
 
         protected void btnAddToCart_Click(object sender, EventArgs e)
         {
-            if (((_currUser != "-") && (_tempId != 0)))
+            if (_currUser != "-" && _tempId != 0)
             {
                 _cart.cartID = _userCartId;
                 _cart.cartOwner = _currUser;
@@ -187,10 +187,10 @@ namespace E_CommerceApp
                 _cart.lastInsertedItem = items[0];
                 _cart.lastInsertedPrice = items[1];
                 _cart.lastInsertedQuant = items[2];
-                _cart.totalItemQuantity = (Convert.ToInt32(items[3]));
-                _cart.totalCartPrice = (Convert.ToDecimal(items[4]));
+                _cart.totalItemQuantity = Convert.ToInt32(items[3]);
+                _cart.totalCartPrice = Convert.ToDecimal(items[4]);
             }
-            else if (((_currUser != "-") && (_tempId == 0)))
+            else if (_currUser != "-" && _tempId == 0)
             {
                 _cart.cartID = _userCartId;
                 userInfoDataSource.Update();
@@ -219,12 +219,12 @@ namespace E_CommerceApp
                 }
                 else if (productQuant == 0)
                 {
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "notif",
+                    ScriptManager.RegisterStartupScript(this, GetType(), "notif",
                        "alert('ITEM NOT ADDED. This product is currently out of stock. Try again later.')", true);
                 }
                 else
                 {
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "notif",
+                    ScriptManager.RegisterStartupScript(this, GetType(), "notif",
                         string.Format("alert('ITEM NOT ADDED. You either have the maximum number of it in your cart or adding the specified amount of {0} will exceed the limit of 99.')",
                         tbxQty.Text), true);
                 }
@@ -239,12 +239,12 @@ namespace E_CommerceApp
                 }
                 else if (productQuant == 0)
                 {
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "notif",
+                    ScriptManager.RegisterStartupScript(this, GetType(), "notif",
                        "alert('ITEM NOT ADDED. This product is currently out of stock. Try again later.')", true);
                 }
                 else
                 {
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "notif",
+                    ScriptManager.RegisterStartupScript(this, GetType(), "notif",
                         string.Format("alert('ITEM NOT ADDED. You either have the maximum number of it in your cart or adding the specified amount of {0} will exceed the limit of 99.')",
                         tbxQty.Text), true);
 

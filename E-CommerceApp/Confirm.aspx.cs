@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 
 namespace E_CommerceApp
 {
-    public partial class Frm_Confirm : System.Web.UI.Page
+    public partial class Frm_Confirm : Page
     {
         private readonly UserCart _cart = UserCart.Instance;
 
@@ -15,7 +15,7 @@ namespace E_CommerceApp
         {
             if (Session["refkey"] != null)
             {
-                LBL_refNum.Text += ((string)(Session["refkey"]));
+                LBL_refNum.Text += (string)Session["refkey"];
             }
             else
             {
