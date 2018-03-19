@@ -60,8 +60,10 @@
                             <a href="Cart.aspx" class="btn btn-sm btn-success mr-sm-2"><span class="fa fa-shopping-cart"></span>
                                 <asp:Label ID="LBL_Counter" runat="server" Text="Cart ( 0 | 0 )"></asp:Label>
                             </a>
-                            <a href="Login.aspx" class="btn btn-sm btn-outline-primary mr-sm-2">Log In</a>
-                            <a href="Register.aspx" class="btn btn-sm btn-outline-secondary">Sign Up</a>
+                                <asp:Button ID="Btn_Login" runat="server" Text="Login" CssClass="btn btn-sm btn-outline-primary mr-sm-2" CausesValidation="false" />
+                            </a>
+                                <asp:Button ID="Btn_SignUp" runat="server" Text="Register" CssClass="btn btn-sm btn-outline-secondary" OnClick="Btn_SignUp_Click" CausesValidation="false" />
+                            </a>
                         </div>
                     </div>
                 </div>

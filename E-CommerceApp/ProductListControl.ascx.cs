@@ -61,6 +61,8 @@ namespace E_CommerceApp
                 _userCartId = Convert.ToInt32(Session["prevID"]);
             }
 
+            _cart.cartID = _userCartId;
+
 
             Random rand = new Random();
             _referenceKey = rand.Next(99999999).ToString() + _userCartId;
@@ -137,6 +139,9 @@ namespace E_CommerceApp
                 }
             }
 
+            SiteMaster master = Page.Master as SiteMaster;
+            master.UpdateTotalCounters();
+
         }
 
         protected void CartDataSource_Updating(object sender, SqlDataSourceCommandEventArgs e)
@@ -149,7 +154,7 @@ namespace E_CommerceApp
             e.Command.Parameters["@totalCount"].Value = _cart.totalItemQuantity;
             e.Command.Parameters["@totalPrice"].Value = _cart.totalCartPrice;
             SiteMaster master = Page.Master as SiteMaster;
-            master.SetText(_cart.totalItemQuantity, _cart.totalCartPrice);
+            master.UpdateTotalCounters();
         }
 
         protected void CartDataSource_Inserting(object sender, SqlDataSourceCommandEventArgs e)
@@ -162,7 +167,7 @@ namespace E_CommerceApp
             e.Command.Parameters["@totalPrice"].Value = _cart.totalCartPrice;
             e.Command.Parameters["@reference_key"].Value = _referenceKey;
             SiteMaster master = Page.Master as SiteMaster;
-            master.SetText(_cart.totalItemQuantity, _cart.totalCartPrice);
+            master.UpdateTotalCounters();
         }
 
         protected void CartDataSource_Deleting(object sender, SqlDataSourceCommandEventArgs e)

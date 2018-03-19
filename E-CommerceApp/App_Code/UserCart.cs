@@ -352,12 +352,12 @@ namespace E_CommerceApp
                     /// this method is called. That is why we check if the
                     /// current quantity will equate to an amount that is
                     /// greater than 99 or any defined limit.
-                    if(t_quant > 99 || (DBOps.GetProductQuantity(itemSKU) == 0))
+                    if(t_quant > 99 || (DBOps.GetProductQuantity(itemSKU) <= 0))
                     {
                         lastInsertedPrice = t_originalCartDetails[1];
                         lastInsertedQuant = t_originalCartDetails[2];
-                        totalItemQuantity = ComputeTotalItems();
-                        totalCartPrice = ComputeTotalPrice();
+                        totalItemQuantity = Convert.ToInt32(t_originalCartDetails[3]);
+                        totalCartPrice = Convert.ToDecimal(t_originalCartDetails[4]);
                         return false;
                     }
                 }

@@ -96,7 +96,7 @@ namespace E_CommerceApp
             #endregion
 
             SiteMaster master = Page.Master as SiteMaster;
-            master.SetText(_cart.totalItemQuantity, _cart.totalCartPrice);
+            master.UpdateTotalCounters();
         }
 
         #region Product Details Logic
@@ -201,15 +201,17 @@ namespace E_CommerceApp
             }
 
             _itemSKU = _result?["sku"].ToString();
-            int currValue = Convert.ToInt32(tbxQty.Text);
-            bool CanBeAdded = _cart.ItemCanBeAdded(_itemSKU, Convert.ToInt32(tbxQty.Text), _userCartId);
             int productQuant = DBOps.GetProductQuantity(_itemSKU);
 
+
+            int t_itemStock = DBOps.GetProductQuantity(_itemSKU);
+            int t_cartQuantity = Convert.ToInt32(tbxQty.Text);
+            bool proceed = t_itemStock >= t_cartQuantity ? true : false;
 
             _cart.AddItem(_result?["sku"].ToString(), Convert.ToDecimal($"{_result?["price"]}"), Convert.ToInt32(tbxQty.Text));
             if (!DBOps.RecordExists(_userCartId))
             {
-                if (CanBeAdded)
+                if (proceed)
                 {
                     CartDataSource.Insert();
                     _itemQuant = productQuant - Convert.ToInt32(tbxQty.Text);
@@ -220,7 +222,7 @@ namespace E_CommerceApp
                     ScriptManager.RegisterStartupScript(this, this.GetType(), "notif",
                        "alert('ITEM NOT ADDED. This product is currently out of stock. Try again later.')", true);
                 }
-                else if (!CanBeAdded)
+                else
                 {
                     ScriptManager.RegisterStartupScript(this, this.GetType(), "notif",
                         string.Format("alert('ITEM NOT ADDED. You either have the maximum number of it in your cart or adding the specified amount of {0} will exceed the limit of 99.')",
@@ -229,9 +231,9 @@ namespace E_CommerceApp
             }
             else
             {
-                if (CanBeAdded)
+                if (proceed)
                 {
-                    CartDataSource.Update();
+                    CartDataSource.Insert();
                     _itemQuant = productQuant - Convert.ToInt32(tbxQty.Text);
                     Products.Update();
                 }
@@ -240,17 +242,19 @@ namespace E_CommerceApp
                     ScriptManager.RegisterStartupScript(this, this.GetType(), "notif",
                        "alert('ITEM NOT ADDED. This product is currently out of stock. Try again later.')", true);
                 }
-                else if (!CanBeAdded)
+                else
                 {
                     ScriptManager.RegisterStartupScript(this, this.GetType(), "notif",
                         string.Format("alert('ITEM NOT ADDED. You either have the maximum number of it in your cart or adding the specified amount of {0} will exceed the limit of 99.')",
                         tbxQty.Text), true);
-                }
 
+                }
             }
 
+            string[] totals = DBOps.GetUserCartTotals(_cart.cartID);
+
             SiteMaster master = Page.Master as SiteMaster;
-            master.SetText(_cart.totalItemQuantity, _cart.totalCartPrice);
+            master.UpdateTotalCounters();
 
         }
 

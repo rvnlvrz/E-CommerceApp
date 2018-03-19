@@ -34,8 +34,13 @@
                         <span id="Description" runat="server" class="text-secondary"></span>
                         <br />
                         <br />
-                        <asp:Label ID="lblAvailability" runat="server" Text="Availability:" CssClass="text-secondary"></asp:Label>
-                        <span id="Availability" runat="server"></span>
+                        <asp:UpdatePanel ID="UpdatePanel4" runat="server" ChildrenAsTriggers="true" UpdateMode="Always">
+                            <ContentTemplate>
+                                <asp:Label ID="lblAvailability" runat="server" Text="Availability:" CssClass="text-secondary"></asp:Label>
+                                <span id="Availability" runat="server"></span>
+                            </ContentTemplate>
+                        </asp:UpdatePanel>
+
                         <br />
                         <br />
                         <asp:Label ID="lblSKU" runat="server" Text="SKU:" CssClass="text-secondary"></asp:Label>

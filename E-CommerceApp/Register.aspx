@@ -105,10 +105,11 @@
                         </div>
 
                         <div class="form-group col-sm-4">
-                            <asp:Label ID="Label5" runat="server" CssClass="form-label" Text="Valid Until"></asp:Label>
                             <asp:TextBox ID="card_expiryTextBox" runat="server" Text='<%# Bind("card_expiry") %>' CssClass="form-control" TextMode="Date" />
+                            <asp:Label ID="Label5" runat="server" CssClass="form-label text-muted" Text="(Expiry Date)"></asp:Label>
                             <asp:RequiredFieldValidator ID="RequiredFieldValidator13" runat="server" ErrorMessage="This field is required or the date entered is invalid." ControlToValidate="card_expiryTextBox" ForeColor="#FF5050" Display="Dynamic"></asp:RequiredFieldValidator>
                             <asp:CompareValidator ID="CompareValidator2" runat="server" ControlToValidate="card_expiryTextBox" Display="Dynamic" ErrorMessage="Please enter a valid date." ForeColor="#FF5050" Type="Date" Operator="DataTypeCheck"></asp:CompareValidator>
+
                         </div>
                         <div class="form-group col-sm-4">
                             <asp:TextBox ID="card_secNumberTextBox" runat="server" Text='<%# Bind("card_secNumber") %>' CssClass="form-control"

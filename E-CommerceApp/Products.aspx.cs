@@ -9,7 +9,8 @@ namespace E_CommerceApp
         protected void Page_Load(object sender, EventArgs e)
         {
             SiteMaster master = Page.Master as SiteMaster;
-            master.SetText(_cart.totalItemQuantity, _cart.totalCartPrice);
+            string[] totals = DBOps.GetUserCartTotals(_cart.cartID);
+            master.UpdateTotalCounters();
         }
     }
 }

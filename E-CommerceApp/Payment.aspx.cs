@@ -49,7 +49,7 @@ namespace E_CommerceApp
             }
 
             SiteMaster master = Page.Master as SiteMaster;
-            master.SetText(_cart.totalItemQuantity, _cart.totalCartPrice);
+            master.UpdateTotalCounters();
         }
 
         /// <summary>

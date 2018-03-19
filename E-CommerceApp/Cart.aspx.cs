@@ -55,7 +55,7 @@ namespace E_CommerceApp
                 Session["prevID"] = _userCartId;
             }
 
-            //_cart.cartID = _userCartId;
+            _cart.cartID = _userCartId;
             //Session["prevID"] = _userCartId;
 
             lvw_items.DataSource = DBOps.BuildUserCart(_userCartId);
@@ -76,7 +76,7 @@ namespace E_CommerceApp
             }
 
             SiteMaster master = Page.Master as SiteMaster;
-            master.SetText(_cart.totalItemQuantity, _cart.totalCartPrice);
+            master.UpdateTotalCounters();
         }
 
         protected void lvw_items_ItemCommand(object sender, ListViewCommandEventArgs e)
@@ -120,7 +120,7 @@ namespace E_CommerceApp
             lvw_totals.DataBind();
 
             SiteMaster master = Page.Master as SiteMaster;
-            master.SetText(_cart.totalItemQuantity, _cart.totalCartPrice);
+            master.UpdateTotalCounters();
         }
 
         protected void cartDatasource_Updating(object sender, SqlDataSourceCommandEventArgs e)
@@ -153,25 +153,49 @@ namespace E_CommerceApp
             Label lblSku = (Label)item.FindControl("lbl_sku");
             Label lblPrice = (Label)item.FindControl("lbl_price");
 
-            int t_originalQuant = DBOps.GetItemQuantity(_userCartId, lblSku.Text);
+            int t_itemStock = DBOps.GetProductQuantity(lblSku.Text);
             int t_cartQuantity = Convert.ToInt32(tb.Text);
+            int t_currCartQuantity = DBOps.GetItemQuantity(_userCartId, lblSku.Text);
+            int t_sessionQuant = 0;
+
+            if (Session[lblSku.Text] == null)
+            {
+                Session[lblSku.Text] = t_currCartQuantity;
+            }
+            else
+            {
+                t_sessionQuant = Convert.ToInt32(Session[lblSku.Text]);
+            }
+
 
             try
             {
-                if (t_cartQuantity <= t_originalQuant)
-                {
-                    _cart.UpdateItem(lblSku.Text, Decimal.Parse(lblPrice.Text, NumberStyles.Currency), Convert.ToInt32(tb.Text));
-                    cartDatasource.Update();
+                _itemSKU = lblSku.Text;
 
-                    _itemSKU = lblSku.Text;
-                    _itemQuant = (DBOps.GetProductQuantity(_itemSKU) + Math.Abs((t_originalQuant - Convert.ToInt32(tb.Text))));
-                    ProductsDataSource.Update();
+                /// user adds a specified amount of the item to the cart
+                if ((t_currCartQuantity - t_cartQuantity) < 0)
+                {
+                    if ((t_itemStock > t_cartQuantity) || (t_sessionQuant >= t_cartQuantity))
+                    {
+                        _cart.UpdateItem(lblSku.Text, Decimal.Parse(lblPrice.Text, NumberStyles.Currency), Convert.ToInt32(tb.Text));
+                        cartDatasource.Update();
+
+                        _itemQuant = (DBOps.GetProductQuantity(_itemSKU) - Math.Abs((t_currCartQuantity - t_cartQuantity)));
+                        ProductsDataSource.Update();
+                    }
+                    else
+                    {
+                        ScriptManager.RegisterStartupScript(this, this.GetType(), "notif",
+                            string.Format("alert('ITEM NOT ADDED. The specified quantity of {0} is more than the available stock of the item.')",
+                            t_cartQuantity), true);
+                    }
                 }
                 else
                 {
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "notif",
-                        string.Format("alert('ITEM NOT ADDED. The specified quantity of {0} is more than the available stock of the item.')",
-                        t_cartQuantity), true);
+                    _cart.UpdateItem(lblSku.Text, Decimal.Parse(lblPrice.Text, NumberStyles.Currency), Convert.ToInt32(tb.Text));
+                    cartDatasource.Update();
+                    _itemQuant = (DBOps.GetProductQuantity(_itemSKU) + Math.Abs((t_currCartQuantity - t_cartQuantity)));
+                    ProductsDataSource.Update();
                 }
             }
             catch (Exception)
@@ -185,7 +209,9 @@ namespace E_CommerceApp
             lvw_totals.DataBind();
 
             SiteMaster master = Page.Master as SiteMaster;
-            master.SetText(_cart.totalItemQuantity, _cart.totalCartPrice);
+            master.UpdateTotalCounters();
+            Session.Remove("itemQuant");
+
         }
 
         protected void Button1_Click(object sender, EventArgs e)

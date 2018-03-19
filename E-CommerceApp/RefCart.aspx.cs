@@ -29,7 +29,7 @@ namespace E_CommerceApp
             lvw_totals.DataBind();
 
             SiteMaster master = Page.Master as SiteMaster;
-            master.SetText(_cart.totalItemQuantity, _cart.totalCartPrice);
+            master.UpdateTotalCounters();
         }
 
         protected void btn_goRefCart_Click(object sender, EventArgs e)
