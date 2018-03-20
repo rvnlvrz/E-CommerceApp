@@ -11,7 +11,7 @@
             <br />
             <br />
             <div class="d-flex flex-row">
-                <asp:Button ID="BtnAddToCart" runat="server" Text="Add to Cart" CssClass="btn btn-primary p-2" CommandArgument='<%#Eval("sku") + "," + Eval("price") %>' />
+                <asp:Button ID="BtnAddToCart" runat="server" Text="Add to Cart" CssClass="btn btn-primary p-2" CommandArgument='<%#Eval("sku") + "," + Eval("price") %>' Enabled='<%# IsAvailable(Eval("qty")) %>'/>
             </div>
         </div>
     </a>

@@ -25,5 +25,13 @@ namespace E_CommerceApp
             List<string> files = images.Select(img => path + "/" + Path.GetFileName(img)).ToList();
             return files[0];
         }
+
+        protected bool IsAvailable(object itemCount)
+        {
+            int count = (int)itemCount;
+
+            if (count == 0) return false;
+            return true;
+        }
     }
 }

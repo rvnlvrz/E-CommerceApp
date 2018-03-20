@@ -20,8 +20,8 @@ namespace E_CommerceApp
         private int _tempId = -1;
         private string _currUser = "-";
         private string _referenceKey = string.Empty;
-        private int _itemQuant = 0;
-        private string _itemSKU = string.Empty;
+        private int _itemQuant;
+        private string _itemSku = string.Empty;
         #endregion
 
         protected void Page_Load(object sender, EventArgs e)
@@ -94,15 +94,23 @@ namespace E_CommerceApp
             #endregion
         }
 
+        protected bool IsAvailable()
+        {
+            int count = int.Parse(_result["qty"].ToString());
+
+            if (count == 0) return false;
+            return true;
+        }
+
         #region Product Details Logic
         private void CreateDetails()
         {
             // Set basic page details
-            Page.Title = _result?["name"].ToString();
-            lblTitle.Text = _result?["name"].ToString();
-            Description.InnerText = _result?["description"].ToString();
-            SKU.InnerText = _result?["sku"].ToString();
-            Price.InnerText = $"{_result?["price"]:C}";
+            Page.Title = _result["name"].ToString();
+            lblTitle.Text = _result["name"].ToString();
+            Description.InnerText = _result["description"].ToString();
+            SKU.InnerText = _result["sku"].ToString();
+            Price.InnerText = $"{_result["price"]:C}";
 
             // Determine availability status (Shows actual count when stock <= 10)
             string status;
@@ -195,13 +203,13 @@ namespace E_CommerceApp
                 _cart.cartID = _userCartId;
             }
 
-            _itemSKU = _result?["sku"].ToString();
-            int productQuant = DBOps.GetProductQuantity(_itemSKU);
+            _itemSku = _result?["sku"].ToString();
+            int productQuant = DBOps.GetProductQuantity(_itemSku);
 
 
-            int t_itemStock = DBOps.GetProductQuantity(_itemSKU);
+            int t_itemStock = DBOps.GetProductQuantity(_itemSku);
             int t_cartQuantity = Convert.ToInt32(tbxQty.Text);
-            bool proceed = t_itemStock >= t_cartQuantity ? true : false;
+            bool proceed = t_itemStock >= t_cartQuantity;
 
             _cart.AddItem(_result?["sku"].ToString(), Convert.ToDecimal($"{_result?["price"]}"), Convert.ToInt32(tbxQty.Text));
             if (!DBOps.RecordExists(_userCartId))
@@ -220,8 +228,7 @@ namespace E_CommerceApp
                 else
                 {
                     ScriptManager.RegisterStartupScript(this, GetType(), "notif",
-                        string.Format("alert('ITEM NOT ADDED. You either have the maximum number of it in your cart or adding the specified amount of {0} will exceed the limit of 99.')",
-                        tbxQty.Text), true);
+                        $"alert('ITEM NOT ADDED. You either have the maximum number of it in your cart or adding the specified amount of {tbxQty.Text} will exceed the limit of 99.')", true);
                 }
             }
             else
@@ -240,8 +247,7 @@ namespace E_CommerceApp
                 else
                 {
                     ScriptManager.RegisterStartupScript(this, GetType(), "notif",
-                        string.Format("alert('ITEM NOT ADDED. You either have the maximum number of it in your cart or adding the specified amount of {0} will exceed the limit of 99.')",
-                        tbxQty.Text), true);
+                        $"alert('ITEM NOT ADDED. You either have the maximum number of it in your cart or adding the specified amount of {tbxQty.Text} will exceed the limit of 99.')", true);
                 }
             }
 
@@ -301,7 +307,7 @@ namespace E_CommerceApp
 
         protected void Products_Updating(object sender, SqlDataSourceCommandEventArgs e)
         {
-            e.Command.Parameters["@sku"].Value = _itemSKU;
+            e.Command.Parameters["@sku"].Value = _itemSku;
             e.Command.Parameters["@qty"].Value = _itemQuant;
         }
     }
