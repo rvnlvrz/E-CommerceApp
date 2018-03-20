@@ -206,6 +206,10 @@ namespace E_CommerceApp
             _itemSku = _result?["sku"].ToString();
             int productQuant = DBOps.GetProductQuantity(_itemSku);
 
+            if(Session[_itemSku] == null)
+            {
+                Session[_itemSku] = productQuant;
+            }
 
             int t_itemStock = DBOps.GetProductQuantity(_itemSku);
             int t_cartQuantity = Convert.ToInt32(tbxQty.Text);

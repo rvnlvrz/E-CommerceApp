@@ -151,19 +151,23 @@ namespace E_CommerceApp
             Label lblSku = (Label)item.FindControl("lbl_sku");
             Label lblPrice = (Label)item.FindControl("lbl_price");
 
-            int t_itemStock = DBOps.GetProductQuantity(lblSku.Text);
+            //int t_itemStock = DBOps.GetProductQuantity(lblSku.Text);
+            int t_itemStock = Convert.ToInt32(Session[lblSku.Text]);
             int t_cartQuantity = Convert.ToInt32(tb.Text);
             int t_currCartQuantity = DBOps.GetItemQuantity(_userCartId, lblSku.Text);
-            int t_sessionQuant = 0;
 
-            if (Session[lblSku.Text] == null)
-            {
-                Session[lblSku.Text] = t_currCartQuantity;
-            }
-            else
-            {
-                t_sessionQuant = Convert.ToInt32(Session[lblSku.Text]);
-            }
+            #region Old validation code
+            //int t_sessionQuant = 0;
+
+            //if (Session[lblSku.Text] != null)
+            //{
+            //    t_sessionQuant = Convert.ToInt32(Session[lblSku.Text]);
+            //}
+            ////else
+            ////{
+            ////    Session[lblSku.Text] = t_currCartQuantity;
+            ////} 
+            #endregion
 
 
             try
@@ -173,7 +177,7 @@ namespace E_CommerceApp
                 /// user adds a specified amount of the item to the cart
                 if (t_currCartQuantity - t_cartQuantity < 0)
                 {
-                    if (t_itemStock >= t_cartQuantity || t_sessionQuant >= t_cartQuantity)
+                    if (t_itemStock >= t_cartQuantity /* || t_sessionQuant >= t_cartQuantity*/)
                     {
                         _cart.UpdateItem(lblSku.Text, Decimal.Parse(lblPrice.Text, NumberStyles.Currency), Convert.ToInt32(tb.Text));
                         cartDatasource.Update();

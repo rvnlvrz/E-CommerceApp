@@ -16,34 +16,35 @@
                                                 <div class="form-group">
                                                     <asp:Label ID="Label1" runat="server" CssClass="form-label" Text="Name on Card"></asp:Label>
                                                     <asp:TextBox ID="Tbx_cardOwner" runat="server" CssClass="form-control form-control-lg"></asp:TextBox>
-                                                    <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="This field is required" ControlToValidate="Tbx_cardOwner" ForeColor="#CC0000" Display="Dynamic"></asp:RequiredFieldValidator>
-                                                    <asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server" ErrorMessage="This field may only contain letters and spaces." ControlToValidate="Tbx_cardOwner" ForeColor="#CC0000" ValidationExpression="^[a-z A-Z]+$" Display="Dynamic"></asp:RegularExpressionValidator>
+                                                    <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="This field is required" ControlToValidate="Tbx_cardOwner" ForeColor="#FF5050" Display="Dynamic"></asp:RequiredFieldValidator>
+                                                    <asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server" ErrorMessage="This field may only contain letters and spaces." ControlToValidate="Tbx_cardOwner" ForeColor="#FF5050" ValidationExpression="^[a-z A-Z]+$" Display="Dynamic"></asp:RegularExpressionValidator>
                                                 </div>
                                                 <div class="form-group">
                                                     <asp:Label ID="Label4" runat="server" CssClass="form-label" Text="Credit Card Number"></asp:Label>
                                                     <asp:TextBox ID="Tbx_cardNum" runat="server" CssClass="form-control form-control-lg"></asp:TextBox>
-                                                    <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ErrorMessage="This field is required" ControlToValidate="Tbx_cardNum" ForeColor="#CC0000" Display="Dynamic"></asp:RequiredFieldValidator>
-                                                    <asp:RegularExpressionValidator ID="RegularExpressionValidator8" runat="server" ErrorMessage="Invalid credit card number." ControlToValidate="Tbx_cardNum" ForeColor="#CC0000" ValidationExpression="^[\d]+$" Display="Dynamic"></asp:RegularExpressionValidator>
+                                                    <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ErrorMessage="This field is required" ControlToValidate="Tbx_cardNum" ForeColor="#FF5050" Display="Dynamic"></asp:RequiredFieldValidator>
+                                                    <asp:RegularExpressionValidator ID="RegularExpressionValidator8" runat="server" ErrorMessage="Invalid credit card number." ControlToValidate="Tbx_cardNum" ForeColor="#FF5050" ValidationExpression="^[\d]+$" Display="Dynamic"></asp:RegularExpressionValidator>
                                                 </div>
                                                 </div>
                                                 <div class="form-row">
                                                     <div class="form-group col-sm-6">
                                                         <asp:Label ID="Label5" runat="server" CssClass="form-label" Text="Valid Until"></asp:Label>
                                                         <asp:TextBox ID="Tbx_Expiry" runat="server" CssClass="form-control form-control-lg"></asp:TextBox>
-                                                        <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ErrorMessage="This field is required or the date entered is invalid." ControlToValidate="Tbx_Expiry" ForeColor="#CC0000" Display="Dynamic"></asp:RequiredFieldValidator>
-                                                        <asp:CompareValidator ID="CompareValidator2" runat="server" ControlToValidate="Tbx_Expiry" Display="Dynamic" ErrorMessage="Please enter a valid date." ForeColor="#CC0000" Type="Date" Operator="DataTypeCheck"></asp:CompareValidator>
+                                                        <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ErrorMessage="This field is required or the date entered is invalid." ControlToValidate="Tbx_Expiry" ForeColor="#FF5050" Display="Dynamic"></asp:RequiredFieldValidator>
+                                                        <asp:CompareValidator ID="CompareEndTodayValidator" Operator="GreaterThan" Type="Date" ControlToValidate="Tbx_Expiry" ErrorMessage="The card you will use should not be expired." runat="server" Display="Dynamic" ForeColor="#FF5050" />
+
                                                     </div>
                                                     <div class="form-group col-sm-6">
                                                         <asp:Label ID="Label6" runat="server" CssClass="form-label" Text="Credit Card Security Code"></asp:Label>
                                                         <asp:TextBox ID="Tbx_secCode" runat="server" CssClass="form-control form-control-lg"></asp:TextBox>
-                                                        <asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server" ErrorMessage="This field is required" ControlToValidate="Tbx_secCode" ForeColor="#CC0000" Display="Dynamic"></asp:RequiredFieldValidator>
-                                                        <asp:RegularExpressionValidator ID="RegularExpressionValidator7" runat="server" ErrorMessage="Invalid security code." ControlToValidate="Tbx_secCode" ForeColor="#CC0000" ValidationExpression="^([0-9]{3,4})$" Display="Dynamic"></asp:RegularExpressionValidator>
+                                                        <asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server" ErrorMessage="This field is required" ControlToValidate="Tbx_secCode" ForeColor="#FF5050" Display="Dynamic"></asp:RequiredFieldValidator>
+                                                        <asp:RegularExpressionValidator ID="RegularExpressionValidator7" runat="server" ErrorMessage="Invalid security code." ControlToValidate="Tbx_secCode" ForeColor="#FF5050" ValidationExpression="^([0-9]{3,4})$" Display="Dynamic"></asp:RegularExpressionValidator>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <asp:Label ID="Label7" runat="server" CssClass="form-label" Text="Shipping Address"></asp:Label>
                                                     <asp:TextBox ID="Tbx_Addr" runat="server" CssClass="form-control form-control-lg" TextMode="MultiLine"></asp:TextBox>
-                                                    <asp:RequiredFieldValidator ID="RequiredFieldValidator5" runat="server" ErrorMessage="This field is required" ControlToValidate="Tbx_Addr" ForeColor="#CC0000" Display="Dynamic"></asp:RequiredFieldValidator>
+                                                    <asp:RequiredFieldValidator ID="RequiredFieldValidator5" runat="server" ErrorMessage="This field is required" ControlToValidate="Tbx_Addr" ForeColor="#FF5050" Display="Dynamic"></asp:RequiredFieldValidator>
                                                 </div>
                                             </ItemTemplate>
                                         </asp:FormView>

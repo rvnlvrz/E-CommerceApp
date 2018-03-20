@@ -19,7 +19,6 @@ namespace E_CommerceApp
 
         protected void Page_Load(object sender, EventArgs e)
         {
-
             if (Session["refNum"] != null)
             {
                 cartNum = Convert.ToInt32(Session["refNum"]);
@@ -47,6 +46,9 @@ namespace E_CommerceApp
                 lvw_totals.DataSource = DBOps.BuildUserCartTotals(cartNum);
                 lvw_totals.DataBind();
             }
+
+            CompareValidator validator = ((CompareValidator)(FormView1.FindControl("CompareEndTodayValidator")));
+            validator.ValueToCompare = DateTime.Now.ToShortDateString();
 
             SiteMaster master = Page.Master as SiteMaster;
             master.UpdateTotalCounters();

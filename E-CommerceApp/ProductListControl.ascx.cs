@@ -106,8 +106,14 @@ namespace E_CommerceApp
 
             _itemSku = productDetails[0].Trim();
 
+
             bool CanBeAdded = _cart.ItemCanBeAdded(_itemSku, 1, _userCartId);
             int productQuant = DBOps.GetProductQuantity(_itemSku);
+
+            if (Session[_itemSku] == null)
+            {
+                Session[_itemSku] = productQuant;
+            }
 
             if (!DBOps.RecordExists(_userCartId))
             {

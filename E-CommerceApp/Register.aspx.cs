@@ -11,7 +11,8 @@ namespace E_CommerceApp
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            CompareValidator validator = ((CompareValidator)(FormView1.FindControl("CompareEndTodayValidator")));
+            validator.ValueToCompare = DateTime.Now.ToShortDateString();
         }
 
         protected void UserInfoDatabase_Inserting(object sender, SqlDataSourceCommandEventArgs e)

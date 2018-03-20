@@ -7,32 +7,35 @@
             <InsertItemTemplate>
                 <asp:Label ID="lbl_personalHeader" runat="server" Text="Personal Information" CssClass="h3"></asp:Label>
                 <hr />
-                <div class="form-row">
-                    <div class="form-group col-sm-4">
-                        <asp:TextBox ID="first_nameTextBox" runat="server" Text='<%# Bind("first_name") %>' CssClass="form-control input-lg"
-                            Placeholder="First Name" />
-                        <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="This field is required." ControlToValidate="first_nameTextBox" Display="Dynamic" ForeColor="#FF5050"></asp:RequiredFieldValidator>
-                        <asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server" ErrorMessage="This field may only contain letters and spaces." ControlToValidate="first_nameTextBox" ForeColor="#FF5050" ValidationExpression="^[a-z A-Z]+$" Display="Dynamic"></asp:RegularExpressionValidator>
-                    </div>
-                    <div class="form-group col-sm-4">
-                        <asp:TextBox ID="middle_nameTextBox" runat="server" Text='<%# Bind("middle_name") %>' CssClass="form-control"
-                            Placeholder="Middle Name" />
-                        <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ErrorMessage="This field is required." ControlToValidate="middle_nameTextBox" Display="Dynamic" ForeColor="#FF5050"></asp:RequiredFieldValidator>
-                        <asp:RegularExpressionValidator ID="RegularExpressionValidator2" runat="server" ErrorMessage="This field may only contain letters and spaces." ControlToValidate="middle_nameTextBox" ForeColor="#FF5050" ValidationExpression="^[a-z A-Z]+$" Display="Dynamic"></asp:RegularExpressionValidator>
-                    </div>
-                    <div class="form-group col-sm-4">
-                        <asp:TextBox ID="last_nameTextBox" runat="server" Text='<%# Bind("last_name") %>' CssClass="form-control"
-                            Placeholder="Last Name" />
-                        <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ErrorMessage="This field is required." ControlToValidate="last_nameTextBox" Display="Dynamic" ForeColor="#FF5050"></asp:RequiredFieldValidator>
-                        <asp:RegularExpressionValidator ID="RegularExpressionValidator3" runat="server" ErrorMessage="This field may only contain letters and spaces." ControlToValidate="last_nameTextBox" ForeColor="#FF5050" ValidationExpression="^[a-z A-Z]+$" Display="Dynamic"></asp:RegularExpressionValidator>
-                    </div>
-                    <div class="form-group col-sm-12">
-                        <asp:TextBox ID="contact_numberTextBox" runat="server" Text='<%# Bind("contact_number") %>' CssClass="form-control"
-                            Placeholder="Contact Number" />
-                        <asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server" ErrorMessage="This field is required." ControlToValidate="contact_numberTextBox" Display="Dynamic" ForeColor="#FF5050"></asp:RequiredFieldValidator>
-                        <asp:RegularExpressionValidator ID="RegularExpressionValidator4" runat="server" ErrorMessage="This field may only contain numbers." ControlToValidate="contact_numberTextBox" ForeColor="#FF5050" ValidationExpression="^[\d]+$" Display="Dynamic"></asp:RegularExpressionValidator>
+                <div class="container">
+                    <div class="form-row">
+                        <div class="form-group col-sm-4">
+                            <asp:TextBox ID="first_nameTextBox" runat="server" Text='<%# Bind("first_name") %>' CssClass="form-control input-lg"
+                                Placeholder="First Name" />
+                            <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="This field is required." ControlToValidate="first_nameTextBox" Display="Dynamic" ForeColor="#FF5050"></asp:RequiredFieldValidator>
+                            <asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server" ErrorMessage="This field may only contain letters and spaces." ControlToValidate="first_nameTextBox" ForeColor="#FF5050" ValidationExpression="^[a-z A-Z]+$" Display="Dynamic"></asp:RegularExpressionValidator>
+                        </div>
+                        <div class="form-group col-sm-4">
+                            <asp:TextBox ID="middle_nameTextBox" runat="server" Text='<%# Bind("middle_name") %>' CssClass="form-control"
+                                Placeholder="Middle Name" />
+                            <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ErrorMessage="This field is required." ControlToValidate="middle_nameTextBox" Display="Dynamic" ForeColor="#FF5050"></asp:RequiredFieldValidator>
+                            <asp:RegularExpressionValidator ID="RegularExpressionValidator2" runat="server" ErrorMessage="This field may only contain letters and spaces." ControlToValidate="middle_nameTextBox" ForeColor="#FF5050" ValidationExpression="^[a-z A-Z]+$" Display="Dynamic"></asp:RegularExpressionValidator>
+                        </div>
+                        <div class="form-group col-sm-4">
+                            <asp:TextBox ID="last_nameTextBox" runat="server" Text='<%# Bind("last_name") %>' CssClass="form-control"
+                                Placeholder="Last Name" />
+                            <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ErrorMessage="This field is required." ControlToValidate="last_nameTextBox" Display="Dynamic" ForeColor="#FF5050"></asp:RequiredFieldValidator>
+                            <asp:RegularExpressionValidator ID="RegularExpressionValidator3" runat="server" ErrorMessage="This field may only contain letters and spaces." ControlToValidate="last_nameTextBox" ForeColor="#FF5050" ValidationExpression="^[a-z A-Z]+$" Display="Dynamic"></asp:RegularExpressionValidator>
+                        </div>
+                        <div class="form-group col-sm-12">
+                            <asp:TextBox ID="contact_numberTextBox" runat="server" Text='<%# Bind("contact_number") %>' CssClass="form-control"
+                                Placeholder="Contact Number" />
+                            <asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server" ErrorMessage="This field is required." ControlToValidate="contact_numberTextBox" Display="Dynamic" ForeColor="#FF5050"></asp:RequiredFieldValidator>
+                            <asp:RegularExpressionValidator ID="RegularExpressionValidator4" runat="server" ErrorMessage="This field may only contain numbers." ControlToValidate="contact_numberTextBox" ForeColor="#FF5050" ValidationExpression="^[\d]+$" Display="Dynamic"></asp:RegularExpressionValidator>
+                        </div>
                     </div>
                 </div>
+
 
 
                 <asp:Label ID="lbl_AccountDet" runat="server" Text="Account Information" CssClass="h3"></asp:Label>
@@ -105,10 +108,11 @@
                         </div>
 
                         <div class="form-group col-sm-4">
-                            <asp:TextBox ID="card_expiryTextBox" runat="server" Text='<%# Bind("card_expiry") %>' CssClass="form-control" TextMode="Date" />
+                            <asp:TextBox ID="card_expiryTextBox" runat="server" Text='<%# Bind("card_expiry") %>' CssClass="form-control" TextMode="Date"
+                                Placeholder="Expiry date" />
                             <asp:Label ID="Label5" runat="server" CssClass="form-label text-muted" Text="(Expiry Date)"></asp:Label>
                             <asp:RequiredFieldValidator ID="RequiredFieldValidator13" runat="server" ErrorMessage="This field is required or the date entered is invalid." ControlToValidate="card_expiryTextBox" ForeColor="#FF5050" Display="Dynamic"></asp:RequiredFieldValidator>
-                            <asp:CompareValidator ID="CompareValidator2" runat="server" ControlToValidate="card_expiryTextBox" Display="Dynamic" ErrorMessage="Please enter a valid date." ForeColor="#FF5050" Type="Date" Operator="DataTypeCheck"></asp:CompareValidator>
+                            <asp:CompareValidator ID="CompareEndTodayValidator" Operator="GreaterThan" Type="Date" ControlToValidate="card_expiryTextBox" ErrorMessage="The card you will use should not be expired." runat="server" Display="Dynamic" ForeColor="#FF5050" />
 
                         </div>
                         <div class="form-group col-sm-4">
