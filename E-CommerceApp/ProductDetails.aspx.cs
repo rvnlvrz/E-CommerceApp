@@ -298,6 +298,7 @@ namespace E_CommerceApp
 
         protected void tbxQty_TextChanged(object sender, EventArgs e)
         {
+            if (tbxQty.Text == string.Empty) tbxQty.Text = "1";
             int currValue = Convert.ToInt32(tbxQty.Text);
             if (currValue > 99)
             {

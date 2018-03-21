@@ -58,10 +58,11 @@
                         <div class="input-group my-3">
                             <asp:TextBox ID="tbxQty" runat="server" TextMode="Number" CssClass="pl-2" OnTextChanged="tbxQty_TextChanged">1</asp:TextBox>
                             <div class="input-group-append">
-                                <asp:Button ID="btnAddToCart" runat="server" Text="Add to Cart" CssClass="btn btn-primary" OnClick="btnAddToCart_Click" 
-                                    Enabled='<%# IsAvailable() %>'/>
+                                <asp:Button ID="btnAddToCart" runat="server" Text="Add to Cart" CssClass="btn btn-primary" OnClick="btnAddToCart_Click"
+                                    Enabled='<%# IsAvailable() %>' />
                             </div>
                         </div>
+                        <asp:RangeValidator ID="ItemCountValidator" runat="server" ErrorMessage="Please provide a valid item count" ControlToValidate="tbxQty" MinimumValue="1" MaximumValue="99"></asp:RangeValidator>
                     </ContentTemplate>
                 </asp:UpdatePanel>
                 <%-- End: Add To Cart --%>
