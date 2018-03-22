@@ -14,10 +14,11 @@ Create a simple e-commerce application implementing the requirements below:
     ~~Credit Card Expiration Date (mm/yy)~~ <br/>
     ~~Credit Card Security Code~~ <br/>
 
-4.	There should be a small panel displayed on every page, showing the total number of items added in the shopping cart and the total amount
+4.	~~There should be a small panel displayed on every page, showing the total number of items added in the shopping cart and the total amount~~
 5.	~~After payment, the application should return a purchase reference number~~
-6.	Using the purchase reference number, the application should be able to retrieve the purchase details so that the user may view the items purchased
-The submission for this project is on March 17, 2018. Please create a user's manual to guide your end-users in using your e-commerce application.
+6.	~~Using the purchase reference number, the application should be able to retrieve the purchase details so that the user may view the items purchased~~
+
+<b>The submission for this project is on March 17, 2018. Please create a user's manual to guide your end-users in using your e-commerce application.</b>
 
 Notes:
 *   Add proper layout and styles to your page <br/>
