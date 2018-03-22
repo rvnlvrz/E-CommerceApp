@@ -1,10 +1,8 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ProductDetails.aspx.cs" Inherits="E_CommerceApp.ProductDetails1" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
-    <%-- Start: Add To Cart --%>
     <div class="container my-4">
         <div class="row">
-            <%-- End: Add To Cart --%>
             <div class="product-slider col-5">
                 <div id="carousel" class="carousel slide" data-ride="carousel">
                     <asp:Panel ID="InnerCarousel" runat="server" CssClass="carousel-inner"></asp:Panel>
@@ -12,7 +10,6 @@
                 <div class="clearfix">
                     <div id="thumbcarousel" class="carousel slide" data-interval="false">
                         <asp:Panel ID="SmallCarousel" runat="server" CssClass="carousel-inner"></asp:Panel>
-                        <!-- /carousel-inner -->
                         <a class="carousel-control-prev" href="#thumbcarousel" role="button" data-slide="prev">
                             <span class="carousel-control-prev-icon  dark-control-prev-icon" aria-hidden="true"></span>
                             <span class="sr-only">Previous</span>
@@ -22,7 +19,6 @@
                             <span class="sr-only">Next</span>
                         </a>
                     </div>
-                    <!-- /thumbcarousel -->
                 </div>
             </div>
             <%-- Data Source --%>
@@ -55,8 +51,8 @@
                         <asp:AsyncPostBackTrigger ControlID="btnAddToCart" />
                     </Triggers>
                     <ContentTemplate>
-                        <div class="input-group my-3">
-                            <asp:TextBox ID="tbxQty" runat="server" TextMode="Number" CssClass="pl-2" OnTextChanged="tbxQty_TextChanged">1</asp:TextBox>
+                        <div class="input-group my-3 w-50">
+                            <asp:TextBox ID="tbxQty" runat="server" TextMode="Number" CssClass="form-control" OnTextChanged="tbxQty_TextChanged">1</asp:TextBox>
                             <div class="input-group-append">
                                 <asp:Button ID="btnAddToCart" runat="server" Text="Add to Cart" CssClass="btn btn-primary" OnClick="btnAddToCart_Click"
                                     Enabled='<%# IsAvailable() %>' />
