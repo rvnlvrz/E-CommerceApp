@@ -191,6 +191,11 @@ namespace E_CommerceApp
             e.Command.Parameters["@sku"].Value = _itemSku;
             e.Command.Parameters["@qty"].Value = _itemQuant;
         }
+
+        protected void BtnSearch_Click(object sender, EventArgs e)
+        {
+            ProductsDataSource.Select(DataSourceSelectArguments.Empty);
+        }
     }
     #endregion
 }

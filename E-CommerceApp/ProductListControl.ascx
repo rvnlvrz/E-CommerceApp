@@ -1,7 +1,14 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ProductListControl.ascx.cs" Inherits="E_CommerceApp.ProductListControl" %>
-<%@ Register TagPrefix="uc1" TagName="ProductCardControl" Src="~/ProductCardControl.ascx" %>
+<%@ Register Src="~/ProductCardControl.ascx" TagName="ProductCardControl" TagPrefix="uc1" %>
 
 <div class="container my-4">
+    <%-- Search Bar --%>
+    <asp:Panel ID="SearchPanel" runat="server" CssClass="input-group mb-3" DefaultButton="BtnSearch">
+        <asp:TextBox ID="TxtSearch" runat="server" CssClass="form-control form-control-lg" Placeholder="Search"></asp:TextBox>
+        <div class="input-group-append">
+            <asp:Button ID="BtnSearch" runat="server" Text="Go" CssClass="btn btn-primary" Style="width: 5rem;" OnClick="BtnSearch_Click" UseSubmitBehavior="False" />
+        </div>
+    </asp:Panel>
     <asp:ListView ID="ProductList" runat="server" DataSourceID="ProductsDataSource" DataKeyNames="id" GroupItemCount="6" OnItemCommand="ProductList_ItemCommand">
         <EmptyDataTemplate>
             <table runat="server" style="">
@@ -21,7 +28,7 @@
         <ItemTemplate>
             <td runat="server">
                 <%-- Product Card --%>
-                <asp:UpdatePanel ID="UpdatePanel1" runat="server" ChildrenAsTriggers="true" UpdateMode="Always">
+                <asp:UpdatePanel ID="CardUpdatePanel" runat="server" ChildrenAsTriggers="true" UpdateMode="Always">
                     <Triggers>
                         <asp:AsyncPostBackTrigger ControlID="ProductCardControl" />
                     </Triggers>
@@ -62,7 +69,10 @@
 </div>
 
 <%-- Data Source --%>
-<asp:SqlDataSource ID="ProductsDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:ProductsConnectionString %>" SelectCommand="SELECT * FROM [Products]" UpdateCommand="UPDATE Products SET [qty] = @qty WHERE [sku] = @sku" OnUpdating="ProductsDataSource_Updating">
+<asp:SqlDataSource ID="ProductsDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:ProductsConnectionString %>" SelectCommand="SELECT id, name, category, manufacturer, description, sku, price, qty, tags, img_url, md_url FROM Products WHERE (name LIKE '%' + @name + '%')" UpdateCommand="UPDATE Products SET [qty] = @qty WHERE [sku] = @sku" OnUpdating="ProductsDataSource_Updating">
+    <SelectParameters>
+        <asp:ControlParameter ControlID="TxtSearch" ConvertEmptyStringToNull="False" DefaultValue="" Name="name" PropertyName="Text" />
+    </SelectParameters>
     <UpdateParameters>
         <asp:Parameter Name="sku" Type="String" />
         <asp:Parameter Name="qty" Type="Int32" />
