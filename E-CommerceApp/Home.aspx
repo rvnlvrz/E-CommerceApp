@@ -42,17 +42,5 @@
             </a>
         </div>
     </div>
-    <div class="container py-4">
-        <div class="row">
-            <asp:TextBox ID="TxtSearch" runat="server" CssClass="form-control form-control-lg" Placeholder="Search"></asp:TextBox>
-        </div>
-    </div>
-    <asp:UpdatePanel ID="UpdatePanel1" runat="server" ChildrenAsTriggers="true">
-        <Triggers>
-            <asp:AsyncPostBackTrigger ControlID="ProductListControl" />
-        </Triggers>
-        <ContentTemplate>
-            <uc1:ProductListControl runat="server" ID="ProductListControl" />
-        </ContentTemplate>
-    </asp:UpdatePanel>
+    <uc1:ProductListControl runat="server" ID="ProductListControl" />
 </asp:Content>
