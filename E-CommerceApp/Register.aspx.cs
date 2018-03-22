@@ -11,6 +11,9 @@ namespace E_CommerceApp
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            //TextBox card_expiryTextBox = ((TextBox)(FormView1.FindControl("card_expiryTextBox")));
+            //card_expiryTextBox.TextMode = TextBoxMode.Date;
+
             CompareValidator validator = ((CompareValidator)(FormView1.FindControl("CompareEndTodayValidator")));
             validator.ValueToCompare = DateTime.Now.ToShortDateString();
         }
@@ -22,7 +25,15 @@ namespace E_CommerceApp
 
         protected void UserInfoDatabase_Inserted(object sender, SqlDataSourceStatusEventArgs e)
         {
-            Response.Redirect("~/Home.aspx");
+            Session["sync"] = "1";
+            Session["currUser"] = ((TextBox)FormView1.FindControl("emailTextBox")).Text;
+            Response.Redirect("~/Cart.aspx");
+        }
+
+        protected void CompareEndTodayValidator_PreRender(object sender, EventArgs e)
+        {
+            CompareValidator validator = ((CompareValidator)(FormView1.FindControl("CompareEndTodayValidator")));
+            validator.ValueToCompare = DateTime.Now.ToShortDateString();
         }
     }
 }

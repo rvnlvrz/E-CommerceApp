@@ -42,7 +42,7 @@
                                             <img class="card-img-top" src="Content/Images/dino.jpg" alt="Card image cap">
                                             <div class="card-body">
                                                 <p class="card-text">Your cart is empty.</p>
-                                                <asp:Button ID="btn_shpNow" runat="server" CssClass="btn btn-outline-success" PostBackUrl="~/Home.aspx" Text="Shop now" />
+                                                <asp:Button ID="btn_shpNow" runat="server" CssClass="btn btn-outline-success" PostBackUrl="~/Products.aspx" Text="Shop now" CausesValidation="false" />
                                             </div>
                                         </div>
                                     </EmptyDataTemplate>
@@ -66,7 +66,7 @@
                                                                 <asp:Label ID="Label5" runat="server" Text="Quantity (Max: 99)" CssClass="h6 text-muted"></asp:Label>
                                                                 <br />
                                                                 <asp:TextBox ID="tbx_qty" runat="server" CssClass="form-control" TextMode="Number" Text='<%# Eval("quantity") %>' min="1" max="99" step="1" OnTextChanged="tbx_qty_TextChanged" AutoPostBack="true"></asp:TextBox>
-                                                                <asp:RangeValidator ID="ItemCountValidator" runat="server" ErrorMessage="Please provide a valid item count with a value ranging from 1 to 99" ControlToValidate="tbx_qty" MinimumValue="1" MaximumValue="99"></asp:RangeValidator>
+                                                                <asp:RangeValidator ID="ItemCountValidator" runat="server" ErrorMessage="Please provide a valid item count with a value ranging from 1 to 99" ControlToValidate="tbx_qty" MinimumValue="1" MaximumValue="99" Display="Dynamic"></asp:RangeValidator>
                                                             </div>
                                                             <asp:Button ID="btn_remove" runat="server" CssClass="btn btn-outline-danger btn-block" Text="Remove from cart" CommandArgument='<%#Eval("sku")+","+ Eval("price")+","+ Eval("quantity")%>' OnClientClick="return confirm('Are you sure you want to delete this item?')" UseSubmitBehavior="true" />
                                                         </div>
@@ -111,15 +111,19 @@
                                 </div>
                             </div>
                             <br />
-                            <asp:Button ID="btn_checkout" runat="server" CssClass="btn btn-success btn-block" Text="Proceed to Checkout" ClientIDMode="Static" OnClick="Button1_Click" CausesValidation="true" />
+                            <asp:Button ID="btn_checkout" runat="server" CssClass="btn btn-success btn-block" Text="Proceed to Checkout" ClientIDMode="Static" OnClick="Button1_Click" CausesValidation="True" />
                             <br />
                             <div class="card">
                                 <h5 class="card-header">View Previous Transactions</h5>
                                 <div class="card-body">
-                                    <div class="form-group">
-                                        <asp:TextBox ID="tbx_refNum" runat="server" CssClass="form-control" Placeholder="Reference Numer" ClientIDMode="Static" CausesValidation="true" />
-                                    </div>
-                                    <asp:Button ID="btn_goRefCart" runat="server" CssClass="btn btn-outline-success btn-block" Text="View Transaction" ClientIDMode="Static" OnClick="btn_goRefCart_Click" CausesValidation="true" />
+                                    <asp:Panel ID="Panel1" runat="server" DefaultButton="btn_goRefCart">
+                                        <div class="form-group">
+                                            <asp:TextBox ID="tbx_refNum" runat="server" CssClass="form-control" Placeholder="Reference Numer" ClientIDMode="Static" CausesValidation="true" ValidationGroup="refNum" />
+                                            <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="This field is required in order to view a previous transaction" ForeColor="#FF5050" ControlToValidate="tbx_refNum" Display="Dynamic" ValidationGroup="refNum"></asp:RequiredFieldValidator>
+                                            <asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server" ErrorMessage="This field may only contain numbers" Display="Dynamic" ForeColor="#FF5050" ControlToValidate="tbx_refNum" ValidationExpression="[0-9]+" ValidationGroup="refNum"></asp:RegularExpressionValidator>
+                                        </div>
+                                        <asp:Button ID="btn_goRefCart" runat="server" CssClass="btn btn-outline-success btn-block" Text="View Transaction" ClientIDMode="Static" OnClick="btn_goRefCart_Click" CausesValidation="true" ValidationGroup="refNum" />
+                                    </asp:Panel>
                                 </div>
                             </div>
                         </div>
