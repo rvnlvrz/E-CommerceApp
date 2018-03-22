@@ -66,6 +66,7 @@
                                                                 <asp:Label ID="Label5" runat="server" Text="Quantity (Max: 99)" CssClass="h6 text-muted"></asp:Label>
                                                                 <br />
                                                                 <asp:TextBox ID="tbx_qty" runat="server" CssClass="form-control" TextMode="Number" Text='<%# Eval("quantity") %>' min="1" max="99" step="1" OnTextChanged="tbx_qty_TextChanged" AutoPostBack="true"></asp:TextBox>
+                                                                <asp:RangeValidator ID="ItemCountValidator" runat="server" ErrorMessage="Please provide a valid item count with a value ranging from 1 to 99" ControlToValidate="tbx_qty" MinimumValue="1" MaximumValue="99"></asp:RangeValidator>
                                                             </div>
                                                             <asp:Button ID="btn_remove" runat="server" CssClass="btn btn-outline-danger btn-block" Text="Remove from cart" CommandArgument='<%#Eval("sku")+","+ Eval("price")+","+ Eval("quantity")%>' OnClientClick="return confirm('Are you sure you want to delete this item?')" UseSubmitBehavior="true" />
                                                         </div>

@@ -62,7 +62,7 @@
                                     Enabled='<%# IsAvailable() %>' />
                             </div>
                         </div>
-                        <asp:RangeValidator ID="ItemCountValidator" runat="server" ErrorMessage="Please provide a valid item count" ControlToValidate="tbxQty" MinimumValue="1" MaximumValue="99"></asp:RangeValidator>
+                        <asp:RangeValidator ID="ItemCountValidator" runat="server" ErrorMessage="Please provide a valid item count with a value ranging from 1 to 99" ControlToValidate="tbxQty" MinimumValue="1" MaximumValue="99"></asp:RangeValidator>
                     </ContentTemplate>
                 </asp:UpdatePanel>
                 <%-- End: Add To Cart --%>
