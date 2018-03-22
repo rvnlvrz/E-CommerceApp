@@ -6,10 +6,10 @@
     <asp:Panel ID="SearchPanel" runat="server" CssClass="input-group mb-3" DefaultButton="BtnSearch">
         <asp:TextBox ID="TxtSearch" runat="server" CssClass="form-control form-control-lg" Placeholder="Search"></asp:TextBox>
         <div class="input-group-append">
-            <asp:Button ID="BtnSearch" runat="server" Text="Go" CssClass="btn btn-primary" Style="width: 5rem;" OnClick="BtnSearch_Click" UseSubmitBehavior="False" />
+            <asp:Button ID="BtnSearch" runat="server" Text="Go" CssClass="btn btn-primary" OnClick="BtnSearch_Click" UseSubmitBehavior="False" />
         </div>
     </asp:Panel>
-    <asp:ListView ID="ProductList" runat="server" DataSourceID="ProductsDataSource" DataKeyNames="id" GroupItemCount="6" OnItemCommand="ProductList_ItemCommand">
+    <asp:ListView ID="ProductList" runat="server" DataSourceID="ProductsDataSource" DataKeyNames="id" GroupItemCount="5" OnItemCommand="ProductList_ItemCommand">
         <EmptyDataTemplate>
             <table runat="server" style="">
                 <tr>
@@ -19,6 +19,10 @@
         </EmptyDataTemplate>
         <EmptyItemTemplate>
             <%-- Nothing Here --%>
+            <td>
+                <div style="width: 209px;">
+                </div>
+            </td>
         </EmptyItemTemplate>
         <GroupTemplate>
             <tr id="itemPlaceholderContainer" runat="server">
