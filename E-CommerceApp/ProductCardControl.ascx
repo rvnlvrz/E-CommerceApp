@@ -1,6 +1,6 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ProductCardControl.ascx.cs" Inherits="E_CommerceApp.ProductCardControl" %>
 
-<div class="card mx-1" >
+<div class="card m-1" >
     <a href='ProductDetails.aspx?sku=<%# Eval("sku") %>' class="card-link" style="text-decoration: none; color: inherit">
         <img src='<%# RenderImage(Eval("img_url"))%>' alt="Product Image" class="card-img-top" />
         <div class="card-body">
