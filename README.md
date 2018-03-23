@@ -24,3 +24,10 @@ Notes:
 *   Add proper layout and styles to your page <br/>
 *   Validate user inputs wherever necessary <br/>
 *   For reference, you can browse the pages of public e-commerce sites like Lazada, Amazon, eBay, etc. <br/>
+
+---
+
+A project by:
+    
+    Arvin Kenneth C. Alvarez
+    Carl Ivan T. Rayos del Sol
