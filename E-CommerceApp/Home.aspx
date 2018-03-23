@@ -13,15 +13,15 @@
                 <div class="carousel-item active">
                     <img class="d-block w-100" src="Content/Images/Products/Carousel/banner-iphonex.jpg" alt="First slide">
                     <div class="carousel-caption d-none d-md-block">
-                        <h4>The new iPhone X</h4>
+                        <a href="ProductDetails.aspx?sku=APPLE_IPHONE_X" class="h4">The new iPhone X</a>
                         <p>Pre order now</p>
                     </div>
                 </div>
                 <div class="carousel-item">
                     <img class="d-block w-100" src="Content/Images/Products/Carousel/banner-s7.jpg" alt="Second slide">
                     <div class="carousel-caption d-none d-md-block">
-                        <h4>The Red Knight</h4>
-                        <p>Go zap em' with everything you've got!</p>
+                        <a href="ProductDetails.aspx?sku=SAMSUNG_S7_HEROLTE">The Galaxy S7</a>
+                        <p>Order Now</p>
                     </div>
                 </div>
             </div>
