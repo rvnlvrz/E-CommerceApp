@@ -11,24 +11,17 @@
             </ol>
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <img class="d-block w-100" src="https://i.imgur.com/jEOfMPv.jpg" alt="First slide">
+                    <img class="d-block w-100" src="Content/Images/Products/Carousel/banner-iphonex.jpg" alt="First slide">
                     <div class="carousel-caption d-none d-md-block">
-                        <h4>The Orange Knight</h4>
-                        <p>Go burn em' with fire!</p>
+                        <h4>The new iPhone X</h4>
+                        <p>Pre order now</p>
                     </div>
                 </div>
                 <div class="carousel-item">
-                    <img class="d-block w-100" src="https://i.imgur.com/8XGxsCx.jpg" alt="Second slide">
+                    <img class="d-block w-100" src="Content/Images/Products/Carousel/banner-s7.jpg" alt="Second slide">
                     <div class="carousel-caption d-none d-md-block">
                         <h4>The Red Knight</h4>
                         <p>Go zap em' with everything you've got!</p>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <img class="d-block w-100" src="https://i.imgur.com/I1n1g5u.jpg" alt="Third slide">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h4>The Green Knight</h4>
-                        <p>Go kill em' with poison!</p>
                     </div>
                 </div>
             </div>
