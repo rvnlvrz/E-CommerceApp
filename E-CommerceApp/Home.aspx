@@ -20,7 +20,7 @@
                 <div class="carousel-item">
                     <img class="d-block w-100" src="Content/Images/Products/Carousel/banner-s7.jpg" alt="Second slide">
                     <div class="carousel-caption d-none d-md-block">
-                        <a href="ProductDetails.aspx?sku=SAMSUNG_S7_HEROLTE">The Galaxy S7</a>
+                        <a href="ProductDetails.aspx?sku=SAMSUNG_S7_HEROLTE" class="h4">The Galaxy S7</a>
                         <p>Order Now</p>
                     </div>
                 </div>
